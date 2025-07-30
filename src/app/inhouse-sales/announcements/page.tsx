@@ -433,13 +433,11 @@ export default function AnnouncementsPage() {
           <p className="text-gray-600 mt-2">Stay updated with important announcements and team messages</p>
         </div>
         <div className="flex gap-2">
-          <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
-            <DialogTrigger asChild>
-              <Button>
-                <PinIcon className="w-4 h-4 mr-2" />
-                New Announcement
-              </Button>
-            </DialogTrigger>
+          <Button onClick={() => setShowCreateDialog(true)}>
+            <PinIcon className="w-4 h-4 mr-2" />
+            New Announcement
+          </Button>
+          <Dialog open={showCreateDialog} onClose={() => setShowCreateDialog(false)}>
             <DialogContent className="max-w-2xl">
               <DialogHeader>
                 <DialogTitle>Create New Announcement</DialogTitle>
@@ -469,7 +467,7 @@ export default function AnnouncementsPage() {
                     <Label htmlFor="type">Type</Label>
                     <Select
                       value={announcementForm.announcement_type}
-                      onValueChange={(value) => setAnnouncementForm({ ...announcementForm, announcement_type: value })}
+                                             onChange={(e) => setAnnouncementForm({ ...announcementForm, announcement_type: e.target.value as string })}
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -486,7 +484,7 @@ export default function AnnouncementsPage() {
                     <Label htmlFor="priority">Priority</Label>
                     <Select
                       value={announcementForm.priority}
-                      onValueChange={(value) => setAnnouncementForm({ ...announcementForm, priority: value })}
+                                             onChange={(e) => setAnnouncementForm({ ...announcementForm, priority: e.target.value as string })}
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -525,7 +523,7 @@ export default function AnnouncementsPage() {
                                   <Checkbox
                 id="is_pinned"
                 checked={announcementForm.is_pinned}
-                onCheckedChange={(checked) => setAnnouncementForm({ ...announcementForm, is_pinned: checked as boolean })}
+                onChange={(e) => setAnnouncementForm({ ...announcementForm, is_pinned: e.target.checked })}
               />
                     <Label htmlFor="is_pinned">Pin to top</Label>
                   </div>
@@ -533,7 +531,7 @@ export default function AnnouncementsPage() {
                                   <Checkbox
                 id="requires_acknowledgment"
                 checked={announcementForm.requires_acknowledgment}
-                onCheckedChange={(checked) => setAnnouncementForm({ ...announcementForm, requires_acknowledgment: checked as boolean })}
+                onChange={(e) => setAnnouncementForm({ ...announcementForm, requires_acknowledgment: e.target.checked })}
               />
                     <Label htmlFor="requires_acknowledgment">Requires acknowledgment</Label>
                   </div>
@@ -550,13 +548,11 @@ export default function AnnouncementsPage() {
             </DialogContent>
           </Dialog>
 
-          <Dialog open={showMessageDialog} onOpenChange={setShowMessageDialog}>
-            <DialogTrigger asChild>
-              <Button variant="outline">
-                <MessageSquareIcon className="w-4 h-4 mr-2" />
-                New Message
-              </Button>
-            </DialogTrigger>
+          <Button variant="outline" onClick={() => setShowMessageDialog(true)}>
+            <MessageSquareIcon className="w-4 h-4 mr-2" />
+            New Message
+          </Button>
+          <Dialog open={showMessageDialog} onClose={() => setShowMessageDialog(false)}>
             <DialogContent className="max-w-2xl">
               <DialogHeader>
                 <DialogTitle>Send Team Message</DialogTitle>
@@ -589,7 +585,7 @@ export default function AnnouncementsPage() {
                     <Label htmlFor="message_type">Type</Label>
                     <Select
                       value={messageForm.message_type}
-                      onValueChange={(value) => setMessageForm({ ...messageForm, message_type: value })}
+                                             onChange={(e) => setMessageForm({ ...messageForm, message_type: e.target.value as string })}
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -608,7 +604,7 @@ export default function AnnouncementsPage() {
                                   <Checkbox
                 id="is_urgent"
                 checked={messageForm.is_urgent}
-                onCheckedChange={(checked) => setMessageForm({ ...messageForm, is_urgent: checked as boolean })}
+                onChange={(e) => setMessageForm({ ...messageForm, is_urgent: e.target.checked })}
               />
                     <Label htmlFor="is_urgent">Urgent message</Label>
                   </div>
@@ -616,7 +612,7 @@ export default function AnnouncementsPage() {
                                   <Checkbox
                 id="requires_response"
                 checked={messageForm.requires_response}
-                onCheckedChange={(checked) => setMessageForm({ ...messageForm, requires_response: checked as boolean })}
+                onChange={(e) => setMessageForm({ ...messageForm, requires_response: e.target.checked })}
               />
                     <Label htmlFor="requires_response">Requires response</Label>
                   </div>
@@ -633,7 +629,7 @@ export default function AnnouncementsPage() {
             </DialogContent>
           </Dialog>
 
-          <Dialog open={showReplyDialog} onOpenChange={setShowReplyDialog}>
+          <Dialog open={showReplyDialog} onClose={() => setShowReplyDialog(false)}>
             <DialogContent className="max-w-2xl">
               <DialogHeader>
                 <DialogTitle>Reply to Message</DialogTitle>
@@ -762,12 +758,12 @@ export default function AnnouncementsPage() {
                         {announcement.is_pinned && (
                           <PinIcon className="w-4 h-4 text-blue-500" />
                         )}
-                        <Badge className={getPriorityColor(announcement.priority)}>
+                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getPriorityColor(announcement.priority)}`}>
                           {announcement.priority}
-                        </Badge>
-                        <Badge className={getTypeColor(announcement.announcement_type)}>
+                        </div>
+                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTypeColor(announcement.announcement_type)}`}>
                           {announcement.announcement_type.replace('_', ' ')}
-                        </Badge>
+                        </div>
                       </div>
                       <div className="flex items-center gap-4 text-sm text-gray-600">
                         <span>By {announcement.author.full_name}</span>
@@ -842,17 +838,17 @@ export default function AnnouncementsPage() {
                       <div className="flex items-center gap-2 mb-2">
                         <CardTitle className="text-lg">{message.subject}</CardTitle>
                         {message.is_urgent && (
-                          <Badge className="bg-red-100 text-red-800">
+                          <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                             Urgent
-                          </Badge>
+                          </div>
                         )}
-                        <Badge className="bg-blue-100 text-blue-800">
+                        <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                           {message.message_type}
-                        </Badge>
+                        </div>
                         {message.thread_count > 0 && (
-                          <Badge variant="outline">
+                          <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700">
                             {message.thread_count} replies
-                          </Badge>
+                          </div>
                         )}
                       </div>
                       <div className="flex items-center gap-4 text-sm text-gray-600">

@@ -29,9 +29,7 @@ const DialogTrigger = React.forwardRef<
   <button
     ref={ref}
     type="button"
-    style={{
-      ...(className && { className })
-    }}
+    className={className}
     {...props}
   />
 ))
@@ -43,9 +41,7 @@ const DialogPortal = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    style={{
-      ...(className && { className })
-    }}
+    className={className}
     {...props}
   />
 ))
@@ -57,9 +53,7 @@ const DialogOverlay = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
-    style={{
-      ...(className && { className })
-    }}
+    className={className}
     {...props}
   />
 ))
@@ -86,12 +80,12 @@ const DialogHeader = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
+    className={className}
     style={{
       display: 'flex',
       flexDirection: 'column',
       gap: '6px',
       padding: '24px',
-      ...(className && { className })
     }}
     {...props}
   />
@@ -138,10 +132,10 @@ const DialogDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <div
     ref={ref}
+    className={className}
     style={{
       fontSize: '0.875rem',
       color: 'rgba(0, 0, 0, 0.6)',
-      ...(className && { className })
     }}
     {...props}
   />
@@ -150,16 +144,18 @@ DialogDescription.displayName = "DialogDescription"
 
 const DialogClose = React.forwardRef<
   HTMLButtonElement,
-  React.ButtonHTMLAttributes<HTMLButtonElement>
+  import("@mui/material").IconButtonProps
 >(({ className, ...props }, ref) => (
   <IconButton
     ref={ref}
     aria-label="close"
+    color="inherit"
     sx={{
       position: 'absolute',
       right: 8,
       top: 8,
-      color: 'grey.500',
+      // If you want a custom color, use the sx prop:
+      // color: (theme) => theme.palette.grey[500],
       ...(className && { className })
     }}
     {...props}

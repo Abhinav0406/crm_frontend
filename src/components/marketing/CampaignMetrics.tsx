@@ -161,7 +161,7 @@ export default function CampaignMetrics() {
           <p className="text-gray-600">Detailed performance analysis of your marketing campaigns</p>
         </div>
         <div className="flex space-x-2">
-          <Select value={filter} onValueChange={setFilter}>
+          <Select value={filter} onChange={(e) => setFilter(e.target.value as string)}>
             <SelectTrigger className="w-40">
               <SelectValue placeholder="Filter by type" />
             </SelectTrigger>
@@ -173,7 +173,7 @@ export default function CampaignMetrics() {
               <SelectItem value="sms">SMS</SelectItem>
             </SelectContent>
           </Select>
-          <Select value={timeRange} onValueChange={setTimeRange}>
+          <Select value={timeRange} onChange={(e) => setTimeRange(e.target.value as string)}>
             <SelectTrigger className="w-32">
               <SelectValue placeholder="Time range" />
             </SelectTrigger>
@@ -261,9 +261,9 @@ export default function CampaignMetrics() {
                       </p>
                     </div>
                   </div>
-                  <Badge className={getStatusColor(campaign.status)}>
+                  <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(campaign.status)}`}>
                     {campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)}
-                  </Badge>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-sm">

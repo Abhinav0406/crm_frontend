@@ -306,7 +306,7 @@ export default function CustomersPage() {
         </Fade>
       ) : (
         <Fade in={true} timeout={1000} style={{ transitionDelay: '200ms' }}>
-          <StyledTableContainer component={Paper}>
+          <TableContainer component={Paper}>
             <Table>
               <StyledTableHead>
                 <TableRow>
@@ -416,7 +416,7 @@ export default function CustomersPage() {
                 ))}
               </TableBody>
             </Table>
-          </StyledTableContainer>
+          </TableContainer>
         </Fade>
       )}
     </Container>

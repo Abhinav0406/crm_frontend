@@ -83,6 +83,7 @@ export default function EcommerceDashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
     fetchEcommerceData();
@@ -241,81 +242,198 @@ export default function EcommerceDashboard() {
       </div>
 
       {/* Main Content Tabs */}
-      <Tabs defaultValue="overview" className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="platforms">Platforms</TabsTrigger>
-          <TabsTrigger value="products">Products</TabsTrigger>
-          <TabsTrigger value="orders">Orders</TabsTrigger>
-        </TabsList>
+      <div className="space-y-4">
+        <div className="flex space-x-4 border-b">
+          <button
+            onClick={() => setActiveTab("overview")}
+            className={`px-4 py-2 font-medium ${
+              activeTab === "overview"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Overview
+          </button>
+          <button
+            onClick={() => setActiveTab("platforms")}
+            className={`px-4 py-2 font-medium ${
+              activeTab === "platforms"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Platforms
+          </button>
+          <button
+            onClick={() => setActiveTab("products")}
+            className={`px-4 py-2 font-medium ${
+              activeTab === "products"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Products
+          </button>
+          <button
+            onClick={() => setActiveTab("orders")}
+            className={`px-4 py-2 font-medium ${
+              activeTab === "orders"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Orders
+          </button>
+        </div>
 
-        <TabsContent value="overview" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Platform Summary */}
+        {activeTab === "overview" && (
+          <div className="space-y-4">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Platform Summary */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Platform Summary</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {(platforms || []).map((platform) => (
+                      <div key={platform.id} className="border rounded-lg p-4">
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="flex items-center space-x-3">
+                            <div className={`w-3 h-3 rounded-full ${
+                              platform.status === 'connected' ? 'bg-green-500' : 
+                              platform.status === 'error' ? 'bg-yellow-500' : 'bg-red-500'
+                            }`}></div>
+                            <div>
+                              <h3 className="font-medium">{platform.name}</h3>
+                              <p className="text-sm text-gray-500 capitalize">{platform.type}</p>
+                            </div>
+                          </div>
+                          <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(platform.status)}`}>
+                            {platform.status.charAt(0).toUpperCase() + platform.status.slice(1)}
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-3 gap-4 text-sm">
+                          <div>
+                            <p className="text-gray-500">Products</p>
+                            <p className="font-medium">{platform.totalProducts}</p>
+                          </div>
+                          <div>
+                            <p className="text-gray-500">Orders</p>
+                            <p className="font-medium">{platform.totalOrders}</p>
+                          </div>
+                          <div>
+                            <p className="text-gray-500">Revenue</p>
+                            <p className="font-medium">₹{(platform.totalRevenue / 1000).toFixed(0)}K</p>
+                          </div>
+                        </div>
+                        <div className="mt-3 text-xs text-gray-500">
+                          Last synced: {new Date(platform.lastSync).toLocaleString()}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* Recent Orders */}
+              <Card>
+                <CardHeader>
+                  <CardTitle>Recent Orders</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="space-y-4">
+                    {(orders || []).slice(0, 5).map((order) => (
+                      <div key={order.id} className="flex items-center justify-between p-3 border rounded">
+                        <div>
+                          <p className="font-medium text-sm">{order.customerName}</p>
+                          <p className="text-xs text-gray-500">{order.platform} • {order.items} items</p>
+                        </div>
+                        <div className="text-right">
+                          <p className="font-medium text-sm">₹{order.total?.toLocaleString() || '0'}</p>
+                          <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getOrderStatusColor(order.status)}`}>
+                            {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "platforms" && (
+          <div className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Platform Summary</CardTitle>
+                <CardTitle>Connected Platforms</CardTitle>
               </CardHeader>
               <CardContent>
-                              <div className="space-y-4">
-                {(platforms || []).map((platform) => (
+                <div className="space-y-4">
+                  {(platforms || []).map((platform) => (
                     <div key={platform.id} className="border rounded-lg p-4">
-                      <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center justify-between mb-4">
                         <div className="flex items-center space-x-3">
-                          <div className={`w-3 h-3 rounded-full ${
-                            platform.status === 'connected' ? 'bg-green-500' : 
-                            platform.status === 'error' ? 'bg-yellow-500' : 'bg-red-500'
-                          }`}></div>
+                          <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                            <ShoppingCart className="h-5 w-5 text-blue-600" />
+                          </div>
                           <div>
                             <h3 className="font-medium">{platform.name}</h3>
                             <p className="text-sm text-gray-500 capitalize">{platform.type}</p>
                           </div>
                         </div>
-                        <Badge className={getStatusColor(platform.status)}>
-                          {platform.status.charAt(0).toUpperCase() + platform.status.slice(1)}
-                        </Badge>
-                      </div>
-                      <div className="grid grid-cols-3 gap-4 text-sm">
-                        <div>
-                          <p className="text-gray-500">Products</p>
-                          <p className="font-medium">{platform.totalProducts}</p>
-                        </div>
-                        <div>
-                          <p className="text-gray-500">Orders</p>
-                          <p className="font-medium">{platform.totalOrders}</p>
-                        </div>
-                        <div>
-                          <p className="text-gray-500">Revenue</p>
-                          <p className="font-medium">₹{(platform.totalRevenue / 1000).toFixed(0)}K</p>
+                        <div className="flex items-center space-x-2">
+                          <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(platform.status)}`}>
+                            {platform.status.charAt(0).toUpperCase() + platform.status.slice(1)}
+                          </div>
+                          <Button variant="outline" size="sm">
+                            <ExternalLink className="w-4 h-4 mr-1" />
+                            View Store
+                          </Button>
                         </div>
                       </div>
-                      <div className="mt-3 text-xs text-gray-500">
-                        Last synced: {new Date(platform.lastSync).toLocaleString()}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
 
-            {/* Recent Orders */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Recent Orders</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  {(orders || []).slice(0, 5).map((order) => (
-                    <div key={order.id} className="flex items-center justify-between p-3 border rounded">
-                      <div>
-                        <p className="font-medium text-sm">{order.customerName}</p>
-                        <p className="text-xs text-gray-500">{order.platform} • {order.items} items</p>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                        <div className="text-center p-3 bg-gray-50 rounded">
+                          <div className="text-2xl font-bold text-blue-600">{platform.totalProducts}</div>
+                          <div className="text-sm text-gray-600">Products</div>
+                        </div>
+                        <div className="text-center p-3 bg-gray-50 rounded">
+                          <div className="text-2xl font-bold text-green-600">{platform.totalOrders}</div>
+                          <div className="text-sm text-gray-600">Orders</div>
+                        </div>
+                        <div className="text-center p-3 bg-gray-50 rounded">
+                          <div className="text-2xl font-bold text-purple-600">₹{(platform.totalRevenue / 1000).toFixed(0)}K</div>
+                          <div className="text-sm text-gray-600">Revenue</div>
+                        </div>
+                        <div className="text-center p-3 bg-gray-50 rounded">
+                          <div className="text-2xl font-bold text-orange-600">
+                            {platform.syncStatus === 'syncing' ? (
+                              <RefreshCw className="h-6 w-6 animate-spin mx-auto" />
+                            ) : (
+                              <CheckCircle className="h-6 w-6 mx-auto text-green-600" />
+                            )}
+                          </div>
+                          <div className="text-sm text-gray-600">Sync Status</div>
+                        </div>
                       </div>
-                      <div className="text-right">
-                        <p className="font-medium text-sm">₹{order.total?.toLocaleString() || '0'}</p>
-                        <Badge className={getOrderStatusColor(order.status)}>
-                          {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                        </Badge>
+
+                      <div className="flex justify-between items-center">
+                        <div className="text-sm text-gray-500">
+                          Last synced: {platform.lastSync ? new Date(platform.lastSync).toLocaleString() : 'Never'}
+                        </div>
+                        <div className="flex space-x-2">
+                          <Button variant="outline" size="sm">
+                            <RefreshCw className="w-4 h-4 mr-1" />
+                            Sync Now
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <Settings className="w-4 h-4 mr-1" />
+                            Settings
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -323,198 +441,125 @@ export default function EcommerceDashboard() {
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
+        )}
 
-        <TabsContent value="platforms" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Connected Platforms</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {(platforms || []).map((platform) => (
-                  <div key={platform.id} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
-                          <ShoppingCart className="h-5 w-5 text-blue-600" />
+        {activeTab === "products" && (
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Product Catalog</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {(products || []).map((product) => (
+                    <div key={product.id} className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
+                            <Package className="h-5 w-5 text-gray-600" />
+                          </div>
+                          <div>
+                            <h3 className="font-medium">{product.name}</h3>
+                            <p className="text-sm text-gray-500">{product.category} • {product.platform}</p>
+                          </div>
+                        </div>
+                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getProductStatusColor(product.status)}`}>
+                          {product.status.replace('_', ' ').charAt(0).toUpperCase() + product.status.replace('_', ' ').slice(1)}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
+                        <div>
+                          <p className="text-gray-500">Price</p>
+                          <p className="font-medium">₹{product.price?.toLocaleString() || '0'}</p>
                         </div>
                         <div>
-                          <h3 className="font-medium">{platform.name}</h3>
-                          <p className="text-sm text-gray-500 capitalize">{platform.type}</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center space-x-2">
-                        <Badge className={getStatusColor(platform.status)}>
-                          {platform.status.charAt(0).toUpperCase() + platform.status.slice(1)}
-                        </Badge>
-                        <Button variant="outline" size="sm">
-                          <ExternalLink className="w-4 h-4 mr-1" />
-                          View Store
-                        </Button>
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
-                      <div className="text-center p-3 bg-gray-50 rounded">
-                        <div className="text-2xl font-bold text-blue-600">{platform.totalProducts}</div>
-                        <div className="text-sm text-gray-600">Products</div>
-                      </div>
-                      <div className="text-center p-3 bg-gray-50 rounded">
-                        <div className="text-2xl font-bold text-green-600">{platform.totalOrders}</div>
-                        <div className="text-sm text-gray-600">Orders</div>
-                      </div>
-                      <div className="text-center p-3 bg-gray-50 rounded">
-                        <div className="text-2xl font-bold text-purple-600">₹{(platform.totalRevenue / 1000).toFixed(0)}K</div>
-                        <div className="text-sm text-gray-600">Revenue</div>
-                      </div>
-                      <div className="text-center p-3 bg-gray-50 rounded">
-                        <div className="text-2xl font-bold text-orange-600">
-                          {platform.syncStatus === 'syncing' ? (
-                            <RefreshCw className="h-6 w-6 animate-spin mx-auto" />
-                          ) : (
-                            <CheckCircle className="h-6 w-6 mx-auto text-green-600" />
-                          )}
-                        </div>
-                        <div className="text-sm text-gray-600">Sync Status</div>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-between items-center">
-                                    <div className="text-sm text-gray-500">
-                Last synced: {platform.lastSync ? new Date(platform.lastSync).toLocaleString() : 'Never'}
-              </div>
-                      <div className="flex space-x-2">
-                        <Button variant="outline" size="sm">
-                          <RefreshCw className="w-4 h-4 mr-1" />
-                          Sync Now
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          <Settings className="w-4 h-4 mr-1" />
-                          Settings
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="products" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Product Catalog</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {(products || []).map((product) => (
-                  <div key={product.id} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
-                          <Package className="h-5 w-5 text-gray-600" />
+                          <p className="text-gray-500">Stock</p>
+                          <p className="font-medium">{product.stock}</p>
                         </div>
                         <div>
-                          <h3 className="font-medium">{product.name}</h3>
-                          <p className="text-sm text-gray-500">{product.category} • {product.platform}</p>
+                          <p className="text-gray-500">Sales</p>
+                          <p className="font-medium">{product.sales}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500">Revenue</p>
+                          <p className="font-medium">₹{(product.revenue / 1000).toFixed(0)}K</p>
                         </div>
                       </div>
-                      <Badge className={getProductStatusColor(product.status)}>
-                        {product.status.replace('_', ' ').charAt(0).toUpperCase() + product.status.replace('_', ' ').slice(1)}
-                      </Badge>
-                    </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
-                      <div>
-                        <p className="text-gray-500">Price</p>
-                        <p className="font-medium">₹{product.price?.toLocaleString() || '0'}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Stock</p>
-                        <p className="font-medium">{product.stock}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Sales</p>
-                        <p className="font-medium">{product.sales}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Revenue</p>
-                        <p className="font-medium">₹{(product.revenue / 1000).toFixed(0)}K</p>
+                      <div className="mt-3 flex justify-end space-x-2">
+                        <Button variant="outline" size="sm">
+                          <Eye className="w-4 h-4 mr-1" />
+                          View
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          Edit
+                        </Button>
                       </div>
                     </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
 
-                    <div className="mt-3 flex justify-end space-x-2">
-                      <Button variant="outline" size="sm">
-                        <Eye className="w-4 h-4 mr-1" />
-                        View
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        Edit
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
+        {activeTab === "orders" && (
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Recent Orders</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {(orders || []).map((order) => (
+                    <div key={order.id} className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <div>
+                          <h3 className="font-medium">Order #{order.id}</h3>
+                          <p className="text-sm text-gray-500">{order.customerName} • {order.platform}</p>
+                        </div>
+                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getOrderStatusColor(order.status)}`}>
+                          {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                        </div>
+                      </div>
 
-        <TabsContent value="orders" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Recent Orders</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {(orders || []).map((order) => (
-                  <div key={order.id} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <h3 className="font-medium">Order #{order.id}</h3>
-                        <p className="text-sm text-gray-500">{order.customerName} • {order.platform}</p>
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-3">
+                        <div>
+                          <p className="text-gray-500">Total</p>
+                          <p className="font-medium">₹{order.total?.toLocaleString() || '0'}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500">Items</p>
+                          <p className="font-medium">{order.items}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500">Platform</p>
+                          <p className="font-medium">{order.platform}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500">Date</p>
+                          <p className="font-medium">{new Date(order.date).toLocaleDateString()}</p>
+                        </div>
                       </div>
-                      <Badge className={getOrderStatusColor(order.status)}>
-                        {order.status.charAt(0).toUpperCase() + order.status.slice(1)}
-                      </Badge>
-                    </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-3">
-                      <div>
-                        <p className="text-gray-500">Total</p>
-                        <p className="font-medium">₹{order.total?.toLocaleString() || '0'}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Items</p>
-                        <p className="font-medium">{order.items}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Platform</p>
-                        <p className="font-medium">{order.platform}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Date</p>
-                        <p className="font-medium">{new Date(order.date).toLocaleDateString()}</p>
+                      <div className="flex justify-end space-x-2">
+                        <Button variant="outline" size="sm">
+                          <Eye className="w-4 h-4 mr-1" />
+                          View Details
+                        </Button>
+                        <Button variant="outline" size="sm">
+                          Track
+                        </Button>
                       </div>
                     </div>
-
-                    <div className="flex justify-end space-x-2">
-                      <Button variant="outline" size="sm">
-                        <Eye className="w-4 h-4 mr-1" />
-                        View Details
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        Track
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-      </Tabs>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+      </div>
     </div>
   );
 } 

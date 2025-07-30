@@ -37,6 +37,7 @@ import {
   Zoom
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { FlexGrid } from '@/components/ui/FlexGrid';
 import {
   Edit as EditIcon,
   Delete as DeleteIcon,
@@ -370,9 +371,9 @@ export default function CustomerDetailPage() {
       <StyledCard>
         <CardContent sx={{ p: { xs: 3, md: 4 } }}>
           {/* Main Information Grid */}
-          <Grid container spacing={4}>
+          <FlexGrid container spacing={4}>
             {/* Basic Information */}
-            <Grid item xs={12} md={6}>
+            <FlexGrid xs={12} md={6}>
               <SectionCard>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 3 }}>
@@ -392,10 +393,10 @@ export default function CustomerDetailPage() {
                   />
                 </CardContent>
               </SectionCard>
-            </Grid>
+            </FlexGrid>
 
             {/* Address Information */}
-            <Grid item xs={12} md={6}>
+            <FlexGrid xs={12} md={6}>
               <SectionCard>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 3 }}>
@@ -410,10 +411,10 @@ export default function CustomerDetailPage() {
                   <InfoRow label="Country" value={customer.country} />
                 </CardContent>
               </SectionCard>
-            </Grid>
+            </FlexGrid>
 
             {/* Jewelry Preferences */}
-            <Grid item xs={12} md={6}>
+            <FlexGrid xs={12} md={6}>
               <SectionCard>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 3 }}>
@@ -428,10 +429,10 @@ export default function CustomerDetailPage() {
                   <InfoRow label="Budget Range" value={customer.budget_range} />
                 </CardContent>
               </SectionCard>
-            </Grid>
+            </FlexGrid>
 
             {/* Demographics & Visit */}
-            <Grid item xs={12} md={6}>
+            <FlexGrid xs={12} md={6}>
               <SectionCard>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={1} sx={{ mb: 3 }}>
@@ -446,8 +447,8 @@ export default function CustomerDetailPage() {
                   <InfoRow label="Age of End User" value={customer.age_of_end_user} />
                 </CardContent>
               </SectionCard>
-            </Grid>
-          </Grid>
+            </FlexGrid>
+          </FlexGrid>
 
           {/* Notes and Follow-up */}
           <Box sx={{ mt: 4 }}>
@@ -456,14 +457,14 @@ export default function CustomerDetailPage() {
                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 3 }}>
                   Notes & Follow-up
                 </Typography>
-                <Grid container spacing={4}>
-                  <Grid item xs={12} md={6}>
+                <FlexGrid container spacing={4}>
+                  <FlexGrid xs={12} md={6}>
                     <InfoRow label="Notes" value={customer.notes} />
-                  </Grid>
-                  <Grid item xs={12} md={6}>
+                  </FlexGrid>
+                  <FlexGrid xs={12} md={6}>
                     <InfoRow label="Next Follow-up" value={customer.next_follow_up} />
-                  </Grid>
-                </Grid>
+                  </FlexGrid>
+                </FlexGrid>
               </CardContent>
             </SectionCard>
           </Box>
@@ -494,11 +495,11 @@ export default function CustomerDetailPage() {
                           
                           <Collapse in={expandedInterest === index}>
                             <Box sx={{ mt: 2 }}>
-                              <Grid container spacing={3}>
-                                <Grid item xs={12} md={6}>
+                              <FlexGrid container spacing={3}>
+                                <FlexGrid xs={12} md={6}>
                                   <InfoRow label="Main Category" value={interest.mainCategory} />
-                                </Grid>
-                                <Grid item xs={12} md={6}>
+                                </FlexGrid>
+                                <FlexGrid xs={12} md={6}>
                                   <Box>
                                     <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 600, textTransform: 'uppercase' }}>
                                       Preferences
@@ -518,8 +519,8 @@ export default function CustomerDetailPage() {
                                       )}
                                     </Stack>
                                   </Box>
-                                </Grid>
-                              </Grid>
+                                </FlexGrid>
+                              </FlexGrid>
                               
                     {interest.products && interest.products.length > 0 && (
                                 <Box sx={{ mt: 2 }}>
@@ -575,7 +576,7 @@ export default function CustomerDetailPage() {
                     No purchases found for this customer.
                   </Typography>
                 ) : (
-                  <StyledTable component={Paper}>
+                  <TableContainer component={Paper}>
                     <Table>
                       <TableHead>
                         <TableRow>
@@ -596,7 +597,7 @@ export default function CustomerDetailPage() {
                         ))}
                       </TableBody>
                     </Table>
-                  </StyledTable>
+                  </TableContainer>
                 )}
               </CardContent>
             </SectionCard>
@@ -621,7 +622,7 @@ export default function CustomerDetailPage() {
                 No audit logs found for this customer.
               </Typography>
             ) : (
-              <StyledTable component={Paper}>
+              <TableContainer component={Paper}>
                 <Table>
                   <TableHead>
                     <TableRow>
@@ -673,26 +674,26 @@ export default function CustomerDetailPage() {
                   })}
                   </TableBody>
                 </Table>
-              </StyledTable>
+              </TableContainer>
             )}
           </Box>
 
           {/* Timestamps */}
           <Box sx={{ mt: 4, pt: 3, borderTop: 1, borderColor: 'divider' }}>
-            <Grid container spacing={3}>
-              <Grid item xs={12} md={6}>
+            <FlexGrid container spacing={3}>
+              <FlexGrid xs={12} md={6}>
                 <InfoRow 
                   label="Created" 
                   value={new Date(customer.created_at).toLocaleString()} 
                 />
-              </Grid>
-              <Grid item xs={12} md={6}>
+              </FlexGrid>
+              <FlexGrid xs={12} md={6}>
                 <InfoRow 
                   label="Last Updated" 
                   value={new Date(customer.updated_at).toLocaleString()} 
                 />
-              </Grid>
-            </Grid>
+              </FlexGrid>
+            </FlexGrid>
           </Box>
         </CardContent>
       </StyledCard>

@@ -10,8 +10,8 @@ export default function SupportTicketDetail() {
   const { user, loading } = useAuth();
   const params = useParams();
   const router = useRouter();
-  const [ticket, setTicket] = useState(null);
-  const [messages, setMessages] = useState([]);
+  const [ticket, setTicket] = useState<any>(null);
+  const [messages, setMessages] = useState<any[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
   const [newMessage, setNewMessage] = useState('');
   const [sending, setSending] = useState(false);
@@ -25,7 +25,7 @@ export default function SupportTicketDetail() {
 
   const fetchTicket = async () => {
     try {
-      const data = await supportAPI.getTicket(params.id);
+      const data = await supportAPI.getTicket(params.id as string);
       setTicket(data);
     } catch (err) {
       console.error('Error fetching ticket:', err);
@@ -37,22 +37,21 @@ export default function SupportTicketDetail() {
 
   const fetchMessages = async () => {
     try {
-      const data = await supportAPI.getTicketMessages(params.id);
+      const data = await supportAPI.getTicketMessages(params.id as string);
       setMessages(Array.isArray(data) ? data : (data?.results || []));
     } catch (err) {
       console.error('Error fetching messages:', err);
     }
   };
 
-  const handleSendMessage = async (e) => {
-    e.preventDefault();
-    if (!newMessage.trim()) return;
+  const handleSendMessage = async (message: string) => {
+    if (!message.trim()) return;
 
     setSending(true);
     try {
       await supportAPI.sendMessage({
-        ticket: params.id,
-        content: newMessage,
+        ticket: params.id as string,
+        content: message,
         is_internal: false,
         message_type: 'text'
       });
@@ -72,7 +71,7 @@ export default function SupportTicketDetail() {
     if (!confirm('Are you sure you want to close this ticket?')) return;
 
     try {
-      await supportAPI.closeTicket(params.id);
+      await supportAPI.closeTicket(params.id as string);
       toast.success('Ticket closed successfully!');
       fetchTicket();
     } catch (err) {
@@ -83,7 +82,7 @@ export default function SupportTicketDetail() {
 
   const handleReopenTicket = async () => {
     try {
-      await supportAPI.reopenTicket(params.id);
+      await supportAPI.reopenTicket(params.id as string);
       toast.success('Ticket reopened successfully!');
       fetchTicket();
     } catch (err) {
@@ -92,25 +91,25 @@ export default function SupportTicketDetail() {
     }
   };
 
-  const getPriorityColor = (priority) => {
+  const getPriorityColor = (priority: string) => {
     const colors = {
       critical: 'bg-red-100 text-red-800',
       high: 'bg-orange-100 text-orange-800',
       medium: 'bg-yellow-100 text-yellow-800',
-      low: 'bg-green-100 text-green-800'
+      low: 'bg-green-100 text-green-800',
     };
-    return colors[priority] || colors.medium;
+    return colors[priority as keyof typeof colors] || 'bg-gray-100 text-gray-800';
   };
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     const colors = {
       open: 'bg-blue-100 text-blue-800',
       in_progress: 'bg-yellow-100 text-yellow-800',
       resolved: 'bg-green-100 text-green-800',
       closed: 'bg-gray-100 text-gray-800',
-      reopened: 'bg-red-100 text-red-800'
+      reopened: 'bg-purple-100 text-purple-800',
     };
-    return colors[status] || colors.open;
+    return colors[status as keyof typeof colors] || 'bg-gray-100 text-gray-800';
   };
 
   if (loading) {
@@ -279,7 +278,7 @@ export default function SupportTicketDetail() {
         {/* Send Message */}
         {ticket.status !== 'closed' && (
           <div className="p-6 border-t border-gray-200">
-            <form onSubmit={handleSendMessage} className="flex space-x-4">
+            <form onSubmit={(e) => { e.preventDefault(); handleSendMessage(newMessage); }} className="flex space-x-4">
               <input
                 type="text"
                 value={newMessage}

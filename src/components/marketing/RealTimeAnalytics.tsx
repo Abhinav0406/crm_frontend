@@ -185,9 +185,11 @@ export default function RealTimeAnalytics() {
                         <p className="text-sm text-gray-500 capitalize">{campaign.type}</p>
                       </div>
                     </div>
-                    <Badge variant={campaign.status === 'active' ? 'default' : 'secondary'}>
+                    <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                      campaign.status === 'active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'
+                    }`}>
                       {campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)}
-                    </Badge>
+                    </div>
                   </div>
 
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm mb-3">

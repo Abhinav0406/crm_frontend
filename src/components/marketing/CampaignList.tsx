@@ -222,7 +222,7 @@ export default function CampaignList() {
                 />
               </div>
             </div>
-            <Select value={filterType} onValueChange={setFilterType}>
+            <Select value={filterType} onChange={(e) => setFilterType(e.target.value as string)}>
               <SelectTrigger className="w-40">
                 <SelectValue placeholder="Campaign type" />
               </SelectTrigger>
@@ -234,7 +234,7 @@ export default function CampaignList() {
                 <SelectItem value="sms">SMS</SelectItem>
               </SelectContent>
             </Select>
-            <Select value={filterStatus} onValueChange={setFilterStatus}>
+            <Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as string)}>
               <SelectTrigger className="w-40">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
@@ -262,12 +262,12 @@ export default function CampaignList() {
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
                       <h3 className="text-lg font-medium">{campaign.name}</h3>
-                      <Badge className={getStatusColor(campaign.status)}>
+                      <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(campaign.status)}`}>
                         {campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)}
-                      </Badge>
-                      <Badge variant="outline" className="capitalize">
+                      </div>
+                      <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700 capitalize">
                         {campaign.type}
-                      </Badge>
+                      </div>
                     </div>
                     <p className="text-gray-600 mb-3">{campaign.description}</p>
                     
@@ -300,9 +300,9 @@ export default function CampaignList() {
 
                     <div className="mt-4 flex flex-wrap gap-1">
                       {campaign.segments.map((segment) => (
-                        <Badge key={segment} variant="outline" className="text-xs">
+                        <div key={segment} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700">
                           {segment}
-                        </Badge>
+                        </div>
                       ))}
                     </div>
 

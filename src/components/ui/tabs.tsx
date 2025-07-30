@@ -26,7 +26,7 @@ const TabsList = React.forwardRef<HTMLDivElement, TabsListProps>(
 )
 TabsList.displayName = "TabsList"
 
-const TabsTrigger = React.forwardRef<HTMLButtonElement, TabProps>(
+const TabsTrigger = React.forwardRef<HTMLDivElement, TabProps>(
   ({ className, ...props }, ref) => (
     <Tab
       ref={ref}

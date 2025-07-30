@@ -45,7 +45,7 @@ import {
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import {
-  Calendar as CalendarIcon,
+  Event as CalendarIcon,
   Schedule as ClockIcon,
   Person as UserIcon,
   TrackChanges as TargetIcon,
@@ -69,6 +69,7 @@ import {
 import api from '@/lib/api';
 import { useAuth } from '@/contexts/AuthContext';
 
+import { FlexGrid } from '@/components/ui/FlexGrid';
 const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: theme.spacing(2),
   boxShadow: theme.shadows[3],
@@ -502,8 +503,8 @@ const TaskManagementPage = () => {
       {/* Statistics Cards */}
       {statistics && (
         <Fade in={true} timeout={1000} style={{ transitionDelay: '200ms' }}>
-          <Grid container spacing={3} sx={{ mb: 4 }}>
-            <Grid item xs={12} sm={6} lg={3}>
+          <FlexGrid container spacing={3} sx={{ mb: 4 }}>
+            <FlexGrid xs={12} sm={6} lg={3}>
               <StatCard>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={2}>
@@ -521,9 +522,9 @@ const TaskManagementPage = () => {
                   </Stack>
                 </CardContent>
               </StatCard>
-            </Grid>
+            </FlexGrid>
             
-            <Grid item xs={12} sm={6} lg={3}>
+            <FlexGrid xs={12} sm={6} lg={3}>
               <StatCard>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={2}>
@@ -541,9 +542,9 @@ const TaskManagementPage = () => {
                   </Stack>
                 </CardContent>
               </StatCard>
-            </Grid>
+            </FlexGrid>
             
-            <Grid item xs={12} sm={6} lg={3}>
+            <FlexGrid xs={12} sm={6} lg={3}>
               <StatCard>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={2}>
@@ -561,9 +562,9 @@ const TaskManagementPage = () => {
                   </Stack>
                 </CardContent>
               </StatCard>
-            </Grid>
+            </FlexGrid>
             
-            <Grid item xs={12} sm={6} lg={3}>
+            <FlexGrid xs={12} sm={6} lg={3}>
               <StatCard>
                 <CardContent>
                   <Stack direction="row" alignItems="center" spacing={2}>
@@ -581,8 +582,8 @@ const TaskManagementPage = () => {
                   </Stack>
                 </CardContent>
               </StatCard>
-            </Grid>
-          </Grid>
+            </FlexGrid>
+          </FlexGrid>
         </Fade>
       )}
 
@@ -590,8 +591,8 @@ const TaskManagementPage = () => {
       <Fade in={true} timeout={1000} style={{ transitionDelay: '400ms' }}>
         <StyledCard sx={{ mb: 4 }}>
           <CardContent>
-            <Grid container spacing={3} alignItems="center">
-              <Grid item xs={12} md={3}>
+            <FlexGrid container spacing={3} alignItems="center">
+              <FlexGrid xs={12} md={3}>
                 <TextField
                   fullWidth
                   placeholder="Search tasks..."
@@ -606,9 +607,9 @@ const TaskManagementPage = () => {
                   }}
                   size="small"
                 />
-              </Grid>
+              </FlexGrid>
               
-              <Grid item xs={12} sm={6} md={2}>
+              <FlexGrid xs={12} sm={6} md={2}>
                 <FormControl fullWidth size="small">
                   <InputLabel>Status</InputLabel>
                   <Select
@@ -624,9 +625,9 @@ const TaskManagementPage = () => {
                     <MenuItem value="on_hold">On Hold</MenuItem>
                   </Select>
                 </FormControl>
-              </Grid>
+              </FlexGrid>
               
-              <Grid item xs={12} sm={6} md={2}>
+              <FlexGrid xs={12} sm={6} md={2}>
                 <FormControl fullWidth size="small">
                   <InputLabel>Priority</InputLabel>
                   <Select
@@ -641,9 +642,9 @@ const TaskManagementPage = () => {
                     <MenuItem value="urgent">Urgent</MenuItem>
                   </Select>
                 </FormControl>
-              </Grid>
+              </FlexGrid>
               
-              <Grid item xs={12} sm={6} md={2}>
+              <FlexGrid xs={12} sm={6} md={2}>
                 <FormControlLabel
                   control={
                     <Switch
@@ -654,9 +655,9 @@ const TaskManagementPage = () => {
                   }
                   label="Overdue Only"
                 />
-              </Grid>
+              </FlexGrid>
               
-              <Grid item xs={12} sm={6} md={3}>
+              <FlexGrid xs={12} sm={6} md={3}>
                 <Stack direction="row" spacing={1}>
                   <Button
                     variant="contained"
@@ -674,8 +675,8 @@ const TaskManagementPage = () => {
                     Goals
                   </Button>
                 </Stack>
-              </Grid>
-            </Grid>
+              </FlexGrid>
+            </FlexGrid>
           </CardContent>
         </StyledCard>
       </Fade>
@@ -712,8 +713,8 @@ const TaskManagementPage = () => {
                   >
                     <TaskCard>
                       <CardContent>
-                        <Grid container spacing={2} alignItems="center">
-                          <Grid item xs={12} md={6}>
+                        <FlexGrid container spacing={2} alignItems="center">
+                          <FlexGrid xs={12} md={6}>
                             <Stack spacing={1}>
                               <Stack direction="row" alignItems="center" spacing={1}>
                                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
@@ -743,15 +744,16 @@ const TaskManagementPage = () => {
                                   variant="outlined"
                                 />
                                 <StatusChip
+                                  status={task.status}
                                   label={task.status.replace('_', ' ').toUpperCase()}
                                   size="small"
                                   color={getStatusColor(task.status) as any}
                                 />
                               </Stack>
                             </Stack>
-                          </Grid>
+                          </FlexGrid>
                           
-                          <Grid item xs={12} md={3}>
+                          <FlexGrid xs={12} md={3}>
                             <Stack spacing={1}>
                               <Typography variant="caption" color="text.secondary">
                                 Progress: {task.progress_percentage}%
@@ -768,9 +770,9 @@ const TaskManagementPage = () => {
                                 Due: {new Date(task.due_date).toLocaleDateString()}
                               </Typography>
                             </Stack>
-                          </Grid>
+                          </FlexGrid>
                           
-                          <Grid item xs={12} md={3}>
+                          <FlexGrid xs={12} md={3}>
                             <Stack direction="row" spacing={1} justifyContent={{ xs: 'flex-start', md: 'flex-end' }}>
                               {task.status === 'pending' && (
                                 <Tooltip title="Start Task">
@@ -826,8 +828,8 @@ const TaskManagementPage = () => {
                                 </IconButton>
                               </Tooltip>
                             </Stack>
-                          </Grid>
-                        </Grid>
+                          </FlexGrid>
+                        </FlexGrid>
                       </CardContent>
                     </TaskCard>
                   </Zoom>
@@ -848,8 +850,8 @@ const TaskManagementPage = () => {
                 <DialogTitle>Create New Task</DialogTitle>
         <DialogContent>
           <Stack spacing={3} sx={{ mt: 1 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+            <FlexGrid container spacing={2}>
+              <FlexGrid xs={12} md={6}>
                 <TextField
                   label="Title *"
                   fullWidth
@@ -857,8 +859,8 @@ const TaskManagementPage = () => {
                       onChange={(e) => setNewTask(prev => ({ ...prev, title: e.target.value }))}
                       placeholder="Enter task title"
                     />
-              </Grid>
-              <Grid item xs={12} md={6}>
+              </FlexGrid>
+              <FlexGrid xs={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel>Assign To *</InputLabel>
                     <Select 
@@ -878,8 +880,8 @@ const TaskManagementPage = () => {
                         )}
                     </Select>
                 </FormControl>
-              </Grid>
-            </Grid>
+              </FlexGrid>
+            </FlexGrid>
 
             <TextField
               label="Description *"
@@ -891,8 +893,8 @@ const TaskManagementPage = () => {
                     placeholder="Enter task description"
             />
 
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+            <FlexGrid container spacing={2}>
+              <FlexGrid xs={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel>Task Type</InputLabel>
                   <Select
@@ -908,8 +910,8 @@ const TaskManagementPage = () => {
                     <MenuItem value="custom">Custom Task</MenuItem>
                     </Select>
                 </FormControl>
-              </Grid>
-              <Grid item xs={12} md={6}>
+              </FlexGrid>
+              <FlexGrid xs={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel>Priority</InputLabel>
                   <Select
@@ -923,11 +925,11 @@ const TaskManagementPage = () => {
                     <MenuItem value="urgent">Urgent</MenuItem>
                     </Select>
                 </FormControl>
-              </Grid>
-            </Grid>
+              </FlexGrid>
+            </FlexGrid>
 
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+            <FlexGrid container spacing={2}>
+              <FlexGrid xs={12} md={6}>
                 <TextField
                   label="Due Date *"
                       type="datetime-local"
@@ -936,8 +938,8 @@ const TaskManagementPage = () => {
                       value={newTask.due_date}
                       onChange={(e) => setNewTask(prev => ({ ...prev, due_date: e.target.value }))}
                     />
-              </Grid>
-              <Grid item xs={12} md={6}>
+              </FlexGrid>
+              <FlexGrid xs={12} md={6}>
                 <TextField
                   label="Estimated Hours"
                       type="number"
@@ -947,11 +949,11 @@ const TaskManagementPage = () => {
                       onChange={(e) => setNewTask(prev => ({ ...prev, estimated_hours: e.target.value }))}
                       placeholder="Enter estimated hours"
                     />
-              </Grid>
-            </Grid>
+              </FlexGrid>
+            </FlexGrid>
 
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={6}>
+            <FlexGrid container spacing={2}>
+              <FlexGrid xs={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel>Customer</InputLabel>
                   <Select
@@ -971,8 +973,8 @@ const TaskManagementPage = () => {
                         )}
                     </Select>
                 </FormControl>
-              </Grid>
-              <Grid item xs={12} md={6}>
+              </FlexGrid>
+              <FlexGrid xs={12} md={6}>
                 <FormControl fullWidth>
                   <InputLabel>Goal</InputLabel>
                   <Select
@@ -992,8 +994,8 @@ const TaskManagementPage = () => {
                         )}
                     </Select>
                 </FormControl>
-              </Grid>
-            </Grid>
+              </FlexGrid>
+            </FlexGrid>
 
             <TextField
               label="Notes"

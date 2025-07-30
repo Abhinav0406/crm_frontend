@@ -15,7 +15,7 @@ interface Category {
 export default function EditCategory() {
   const router = useRouter();
   const params = useParams();
-  const categoryId = params.id;
+  const categoryId = params.id as string;
   
   const [category, setCategory] = useState<Category | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);

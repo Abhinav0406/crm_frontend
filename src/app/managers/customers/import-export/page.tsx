@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { customersAPI } from '@/lib/api';
 import toast from 'react-hot-toast';
+import { FlexGrid } from '@/components/ui/FlexGrid';
 import {
   Box,
   Typography,
@@ -234,9 +235,9 @@ export default function ManagerCustomerImportExport() {
           </Typography>
         </Box>
 
-        <Grid container spacing={3}>
+        <FlexGrid container spacing={3}>
           {/* Export Section */}
-          <Grid item xs={12} md={6}>
+          <FlexGrid xs={12} md={6}>
             <Card>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
@@ -276,10 +277,10 @@ export default function ManagerCustomerImportExport() {
                 )}
               </CardContent>
             </Card>
-          </Grid>
+          </FlexGrid>
 
           {/* Import Section */}
-          <Grid item xs={12} md={6}>
+          <FlexGrid xs={12} md={6}>
             <Card>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
@@ -370,11 +371,11 @@ export default function ManagerCustomerImportExport() {
                 )}
               </CardContent>
             </Card>
-          </Grid>
+          </FlexGrid>
 
           {/* Import Results */}
           {importResults && (
-            <Grid item xs={12}>
+            <FlexGrid xs={12}>
               <Card>
                 <CardContent>
                   <Typography variant="h6" sx={{ mb: 2, fontWeight: 600 }}>
@@ -402,11 +403,11 @@ export default function ManagerCustomerImportExport() {
                   )}
                 </CardContent>
               </Card>
-            </Grid>
+            </FlexGrid>
           )}
 
           {/* Instructions */}
-          <Grid item xs={12}>
+          <FlexGrid xs={12}>
             <Card sx={{ bgcolor: 'info.50' }}>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', mb: 3 }}>
@@ -416,8 +417,8 @@ export default function ManagerCustomerImportExport() {
                   </Typography>
                 </Box>
                 
-                <Grid container spacing={3}>
-                  <Grid item xs={12} md={6}>
+                <FlexGrid container spacing={3}>
+                  <FlexGrid xs={12} md={6}>
                     <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: 'info.main' }}>
                       Export:
                     </Typography>
@@ -441,9 +442,9 @@ export default function ManagerCustomerImportExport() {
                         />
                       </ListItem>
                     </List>
-                  </Grid>
+                  </FlexGrid>
                   
-                  <Grid item xs={12} md={6}>
+                  <FlexGrid xs={12} md={6}>
                     <Typography variant="subtitle1" sx={{ fontWeight: 600, mb: 2, color: 'info.main' }}>
                       Import:
                     </Typography>
@@ -479,8 +480,8 @@ export default function ManagerCustomerImportExport() {
                         />
                       </ListItem>
                     </List>
-                  </Grid>
-                </Grid>
+                  </FlexGrid>
+                </FlexGrid>
 
                 <Divider sx={{ my: 2 }} />
                 
@@ -492,8 +493,8 @@ export default function ManagerCustomerImportExport() {
                 </Typography>
               </CardContent>
             </Card>
-          </Grid>
-        </Grid>
+          </FlexGrid>
+        </FlexGrid>
       </Container>
     </ThemeProvider>
   );

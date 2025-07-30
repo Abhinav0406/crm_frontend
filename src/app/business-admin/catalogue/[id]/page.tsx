@@ -45,7 +45,7 @@ interface Product {
 export default function ProductDetail() {
   const router = useRouter();
   const params = useParams();
-  const productId = params.id;
+  const productId = params.id as string;
   
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);

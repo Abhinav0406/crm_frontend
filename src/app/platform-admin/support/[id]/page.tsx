@@ -10,8 +10,8 @@ export default function PlatformAdminSupportTicketDetail() {
   const { user, loading } = useAuth();
   const params = useParams();
   const router = useRouter();
-  const [ticket, setTicket] = useState(null);
-  const [messages, setMessages] = useState([]);
+  const [ticket, setTicket] = useState<any>(null);
+  const [messages, setMessages] = useState<any[]>([]);
   const [dataLoading, setDataLoading] = useState(true);
   const [newMessage, setNewMessage] = useState('');
   const [internalMessage, setInternalMessage] = useState('');
@@ -27,7 +27,7 @@ export default function PlatformAdminSupportTicketDetail() {
 
   const fetchTicket = async () => {
     try {
-      const data = await supportAPI.getTicket(params.id);
+      const data = await supportAPI.getTicket(params.id as string);
       setTicket(data);
     } catch (err) {
       console.error('Error fetching ticket:', err);
@@ -39,21 +39,21 @@ export default function PlatformAdminSupportTicketDetail() {
 
   const fetchMessages = async () => {
     try {
-      const data = await supportAPI.getTicketMessages(params.id);
+      const data = await supportAPI.getTicketMessages(params.id as string);
       setMessages(Array.isArray(data) ? data : (data?.results || []));
     } catch (err) {
       console.error('Error fetching messages:', err);
     }
   };
 
-  const handleSendMessage = async (e) => {
+  const handleSendMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!newMessage.trim()) return;
 
     setSending(true);
     try {
       await supportAPI.sendMessage({
-        ticket: params.id,
+        ticket: params.id as string,
         content: newMessage,
         is_internal: false,
         message_type: 'text'
@@ -70,14 +70,14 @@ export default function PlatformAdminSupportTicketDetail() {
     }
   };
 
-  const handleSendInternalMessage = async (e) => {
+  const handleSendInternalMessage = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!internalMessage.trim()) return;
 
     setSending(true);
     try {
       await supportAPI.sendMessage({
-        ticket: params.id,
+        ticket: params.id as string,
         content: internalMessage,
         is_internal: true,
         message_type: 'text'
@@ -97,7 +97,7 @@ export default function PlatformAdminSupportTicketDetail() {
 
   const handleAssignToMe = async () => {
     try {
-      await supportAPI.assignTicketToMe(params.id);
+      await supportAPI.assignTicketToMe(params.id as string);
       toast.success('Ticket assigned to you successfully!');
       fetchTicket();
     } catch (err) {
@@ -108,7 +108,7 @@ export default function PlatformAdminSupportTicketDetail() {
 
   const handleResolveTicket = async () => {
     try {
-      await supportAPI.resolveTicket(params.id);
+      await supportAPI.resolveTicket(params.id as string);
       toast.success('Ticket marked as resolved!');
       fetchTicket();
     } catch (err) {
@@ -121,7 +121,7 @@ export default function PlatformAdminSupportTicketDetail() {
     if (!confirm('Are you sure you want to close this ticket?')) return;
 
     try {
-      await supportAPI.closeTicket(params.id);
+      await supportAPI.closeTicket(params.id as string);
       toast.success('Ticket closed successfully!');
       fetchTicket();
     } catch (err) {
@@ -130,25 +130,25 @@ export default function PlatformAdminSupportTicketDetail() {
     }
   };
 
-  const getPriorityColor = (priority) => {
+  const getPriorityColor = (priority: string) => {
     const colors = {
       critical: 'bg-red-100 text-red-800',
       high: 'bg-orange-100 text-orange-800',
       medium: 'bg-yellow-100 text-yellow-800',
       low: 'bg-green-100 text-green-800'
     };
-    return colors[priority] || colors.medium;
+    return colors[priority as keyof typeof colors] || colors.medium;
   };
 
-  const getStatusColor = (status) => {
+  const getStatusColor = (status: string) => {
     const colors = {
       open: 'bg-blue-100 text-blue-800',
       in_progress: 'bg-yellow-100 text-yellow-800',
       resolved: 'bg-green-100 text-green-800',
       closed: 'bg-gray-100 text-gray-800',
-      reopened: 'bg-red-100 text-red-800'
+      reopened: 'bg-orange-100 text-orange-800'
     };
-    return colors[status] || colors.open;
+    return colors[status as keyof typeof colors] || colors.open;
   };
 
   if (loading) {

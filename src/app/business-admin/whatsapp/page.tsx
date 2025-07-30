@@ -11,6 +11,7 @@ import {
   Paper,
   Stack
 } from '@mui/material';
+import { FlexGrid } from '@/components/ui/FlexGrid';
 
 export default function WhatsAppIntegration() {
   const StatCard = ({ title, value, subtitle }: { title: string; value: string; subtitle: string }) => (
@@ -66,39 +67,39 @@ export default function WhatsAppIntegration() {
         </Box>
 
         {/* WhatsApp Stats */}
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={12} sm={6} md={3}>
+        <FlexGrid container spacing={3} sx={{ mb: 4 }}>
+          <FlexGrid xs={12} sm={6} md={3}>
             <StatCard 
               title="Messages Sent"
               value="0"
               subtitle="No messages sent"
             />
-          </Grid>
+          </FlexGrid>
           
-          <Grid item xs={12} sm={6} md={3}>
+          <FlexGrid xs={12} sm={6} md={3}>
             <StatCard 
               title="Messages Received"
               value="0"
               subtitle="No messages received"
             />
-          </Grid>
+          </FlexGrid>
           
-          <Grid item xs={12} sm={6} md={3}>
+          <FlexGrid xs={12} sm={6} md={3}>
             <StatCard 
               title="Response Rate"
               value="0%"
               subtitle="No response data"
             />
-          </Grid>
+          </FlexGrid>
           
-          <Grid item xs={12} sm={6} md={3}>
+          <FlexGrid xs={12} sm={6} md={3}>
             <StatCard 
               title="Active Chats"
               value="0"
               subtitle="No active chats"
             />
-          </Grid>
-        </Grid>
+          </FlexGrid>
+        </FlexGrid>
 
         {/* Connection Status */}
         <Card elevation={1}>
@@ -144,26 +145,26 @@ export default function WhatsAppIntegration() {
           <CardHeader title="Quick Actions" />
           <Divider />
           <CardContent>
-            <Grid container spacing={2}>
-              <Grid item xs={12} md={4}>
+            <FlexGrid container spacing={2}>
+              <FlexGrid xs={12} md={4}>
                 <ActionButton
                   title="Send Broadcast"
                   description="Send message to multiple contacts"
                 />
-              </Grid>
-              <Grid item xs={12} md={4}>
+              </FlexGrid>
+              <FlexGrid xs={12} md={4}>
                 <ActionButton
                   title="View Templates"
                   description="Manage message templates"
                 />
-              </Grid>
-              <Grid item xs={12} md={4}>
+              </FlexGrid>
+              <FlexGrid xs={12} md={4}>
                 <ActionButton
                   title="Settings"
                   description="Configure WhatsApp settings"
                 />
-              </Grid>
-            </Grid>
+              </FlexGrid>
+            </FlexGrid>
           </CardContent>
         </Card>
       </Stack>

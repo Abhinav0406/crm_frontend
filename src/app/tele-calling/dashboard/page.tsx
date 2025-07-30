@@ -435,7 +435,7 @@ export default function TeleCallingDashboard() {
                         </Typography>
                       </Box>
                     ) : (
-                      <StyledTable component={Paper} elevation={0}>
+                      <TableContainer component={Paper} elevation={0}>
                         <Table>
                           <TableHead>
                             <TableRow>
@@ -472,7 +472,7 @@ export default function TeleCallingDashboard() {
                             ))}
                           </TableBody>
                         </Table>
-                      </StyledTable>
+                      </TableContainer>
                     )}
                   </CardContent>
                 </StyledCard>

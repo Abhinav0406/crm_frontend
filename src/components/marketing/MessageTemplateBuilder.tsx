@@ -191,7 +191,7 @@ export default function MessageTemplateBuilder() {
             </div>
             <div>
               <label className="block text-sm font-medium mb-2">Type</label>
-              <Select value={newTemplate.type} onValueChange={(value: any) => setNewTemplate(prev => ({ ...prev, type: value }))}>
+              <Select value={newTemplate.type} onChange={(value: any) => setNewTemplate(prev => ({ ...prev, type: value }))}>
                 <SelectTrigger>
                   <SelectValue />
                 </SelectTrigger>
@@ -293,23 +293,23 @@ export default function MessageTemplateBuilder() {
                   <div className="flex-1">
                     <div className="flex items-center space-x-3 mb-2">
                       <h3 className="text-lg font-medium">{template.name}</h3>
-                      <Badge className={getStatusColor(template.status)}>
+                      <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(template.status)}`}>
                         {template.status.charAt(0).toUpperCase() + template.status.slice(1)}
-                      </Badge>
-                      <Badge variant="outline">
+                      </div>
+                      <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700">
                         {template.category}
-                      </Badge>
-                      <Badge variant="outline" className="capitalize">
+                      </div>
+                      <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700 capitalize">
                         {template.type}
-                      </Badge>
+                      </div>
                     </div>
                     <p className="text-gray-600 mb-3">{template.content}</p>
                     
                     <div className="flex flex-wrap gap-1 mb-3">
                       {template.variables.map((variable) => (
-                        <Badge key={variable} variant="secondary" className="text-xs">
+                        <div key={variable} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
                           {variable}
-                        </Badge>
+                        </div>
                       ))}
                     </div>
 

@@ -36,7 +36,7 @@ interface Product {
 export default function CategoryDetail() {
   const router = useRouter();
   const params = useParams();
-  const categoryId = params.id;
+  const categoryId = params.id as string;
   
   const [category, setCategory] = useState<Category | null>(null);
   const [products, setProducts] = useState<Product[]>([]);

@@ -35,6 +35,7 @@ import {
 } from 'lucide-react';
 import api from '@/lib/api';
 
+import { FlexGrid } from '@/components/ui/FlexGrid';
 interface Segment {
   id: string;
   name: string;
@@ -198,8 +199,8 @@ export default function SegmentOverview() {
         </Box>
 
       {/* Overall Metrics */}
-        <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} lg={3}>
+        <FlexGrid container spacing={3}>
+          <FlexGrid xs={12} sm={6} lg={3}>
             <MetricCard
               title="Total Segments"
               value={segments.length.toString()}
@@ -207,9 +208,9 @@ export default function SegmentOverview() {
               icon={<Users size={20} />}
               color="primary"
             />
-          </Grid>
+          </FlexGrid>
           
-          <Grid item xs={12} sm={6} lg={3}>
+          <FlexGrid xs={12} sm={6} lg={3}>
             <MetricCard
               title="Total Customers"
               value={totalCustomers.toLocaleString()}
@@ -217,9 +218,9 @@ export default function SegmentOverview() {
               icon={<Users size={20} />}
               color="info"
             />
-          </Grid>
+          </FlexGrid>
           
-          <Grid item xs={12} sm={6} lg={3}>
+          <FlexGrid xs={12} sm={6} lg={3}>
             <MetricCard
               title="Avg Conversion Rate"
               value={`${avgConversionRate.toFixed(1)}%`}
@@ -227,9 +228,9 @@ export default function SegmentOverview() {
               icon={<Target size={20} />}
               color="success"
             />
-          </Grid>
+          </FlexGrid>
           
-          <Grid item xs={12} sm={6} lg={3}>
+          <FlexGrid xs={12} sm={6} lg={3}>
             <MetricCard
               title="Total Revenue"
               value={`₹${(totalRevenue / 1000000).toFixed(1)}M`}
@@ -237,8 +238,8 @@ export default function SegmentOverview() {
               icon={<DollarSign size={20} />}
               color="warning"
             />
-          </Grid>
-        </Grid>
+          </FlexGrid>
+        </FlexGrid>
 
         {/* Filters and Segment Management */}
         <Card elevation={2}>
@@ -249,8 +250,8 @@ export default function SegmentOverview() {
           </CardHeader>
           <CardContent sx={{ p: 3 }}>
             {/* Search and Filters */}
-            <Grid container spacing={2} sx={{ mb: 4 }}>
-              <Grid item xs={12} md={6}>
+            <FlexGrid container spacing={2} sx={{ mb: 4 }}>
+              <FlexGrid xs={12} md={6}>
                 <TextField
                   fullWidth
                   placeholder="Search segments..."
@@ -264,8 +265,8 @@ export default function SegmentOverview() {
                     ),
                   }}
                 />
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              </FlexGrid>
+              <FlexGrid xs={12} sm={6} md={3}>
                 <TextField
                   fullWidth
                   select
@@ -279,8 +280,8 @@ export default function SegmentOverview() {
                   <MenuItem value="product">Product</MenuItem>
                   <MenuItem value="event">Event</MenuItem>
                 </TextField>
-              </Grid>
-              <Grid item xs={12} sm={6} md={3}>
+              </FlexGrid>
+              <FlexGrid xs={12} sm={6} md={3}>
                 <TextField
                   fullWidth
                   select
@@ -293,17 +294,17 @@ export default function SegmentOverview() {
                   <MenuItem value="conversion">Conversion Rate</MenuItem>
                   <MenuItem value="revenue">Revenue</MenuItem>
                 </TextField>
-              </Grid>
-            </Grid>
+              </FlexGrid>
+            </FlexGrid>
 
           {/* Category Distribution */}
             <Box sx={{ mb: 4 }}>
               <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
                 Category Distribution
               </Typography>
-              <Grid container spacing={2}>
+              <FlexGrid container spacing={2}>
               {categories.map((category) => (
-                  <Grid item xs={6} sm={3} key={category.name}>
+                  <FlexGrid xs={6} sm={3} key={category.name}>
                     <Paper 
                       variant="outlined" 
                       sx={{ 
@@ -326,9 +327,9 @@ export default function SegmentOverview() {
                         {category.percentage}%
                       </Typography>
                     </Paper>
-                  </Grid>
+                  </FlexGrid>
                 ))}
-              </Grid>
+              </FlexGrid>
             </Box>
 
           {/* Segments List */}
@@ -379,8 +380,8 @@ export default function SegmentOverview() {
                     </Box>
 
                     {/* Metrics Grid */}
-                    <Grid container spacing={3} sx={{ mb: 2 }}>
-                      <Grid item xs={6} sm={3}>
+                    <FlexGrid container spacing={3} sx={{ mb: 2 }}>
+                      <FlexGrid xs={6} sm={3}>
                         <Box>
                           <Typography variant="caption" color="text.secondary">Growth</Typography>
                           <Typography 
@@ -393,32 +394,32 @@ export default function SegmentOverview() {
                       {segment.growth > 0 ? '+' : ''}{segment.growth}%
                           </Typography>
                         </Box>
-                      </Grid>
-                      <Grid item xs={6} sm={3}>
+                      </FlexGrid>
+                      <FlexGrid xs={6} sm={3}>
                         <Box>
                           <Typography variant="caption" color="text.secondary">Conversion Rate</Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
                             {segment.conversionRate}%
                           </Typography>
                         </Box>
-                      </Grid>
-                      <Grid item xs={6} sm={3}>
+                      </FlexGrid>
+                      <FlexGrid xs={6} sm={3}>
                         <Box>
                           <Typography variant="caption" color="text.secondary">Avg Revenue</Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
                             ₹{(segment.avgRevenue / 1000).toFixed(0)}K
                           </Typography>
                         </Box>
-                      </Grid>
-                      <Grid item xs={6} sm={3}>
+                      </FlexGrid>
+                      <FlexGrid xs={6} sm={3}>
                         <Box>
                           <Typography variant="caption" color="text.secondary">Total Revenue</Typography>
                           <Typography variant="body2" sx={{ fontWeight: 600 }}>
                             ₹{(segment.totalRevenue / 100000).toFixed(1)}L
                           </Typography>
                         </Box>
-                      </Grid>
-                    </Grid>
+                      </FlexGrid>
+                    </FlexGrid>
 
                     {/* Tags and Last Updated */}
                     <Box sx={{ 

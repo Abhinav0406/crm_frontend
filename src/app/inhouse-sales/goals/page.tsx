@@ -321,13 +321,11 @@ const GoalsManagementPage = () => {
             <p className="text-gray-600">Set and track your goals and objectives</p>
           </div>
         </div>
-        <Dialog open={isCreateDialogOpen} onOpenChange={setIsCreateDialogOpen}>
-          <DialogTrigger asChild>
-            <Button className="flex items-center gap-2">
-              <Plus className="w-4 h-4" />
-              Create Goal
-            </Button>
-          </DialogTrigger>
+        <Button className="flex items-center gap-2" onClick={() => setIsCreateDialogOpen(true)}>
+          <Plus className="w-4 h-4" />
+          Create Goal
+        </Button>
+        <Dialog open={isCreateDialogOpen} onClose={() => setIsCreateDialogOpen(false)}>
           <DialogContent className="max-w-md">
             <DialogHeader>
               <DialogTitle>Create New Goal</DialogTitle>
@@ -354,7 +352,7 @@ const GoalsManagementPage = () => {
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <Label htmlFor="goal_type">Goal Type</Label>
-                  <Select value={newGoal.goal_type} onValueChange={(value) => setNewGoal({ ...newGoal, goal_type: value })}>
+                                     <Select value={newGoal.goal_type} onChange={(e) => setNewGoal({ ...newGoal, goal_type: e.target.value as string })}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -370,7 +368,7 @@ const GoalsManagementPage = () => {
                 </div>
                 <div>
                   <Label htmlFor="period">Period</Label>
-                  <Select value={newGoal.period} onValueChange={(value) => setNewGoal({ ...newGoal, period: value })}>
+                                     <Select value={newGoal.period} onChange={(e) => setNewGoal({ ...newGoal, period: e.target.value as string })}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -389,7 +387,6 @@ const GoalsManagementPage = () => {
                 <Input
                   id="target_value"
                   type="number"
-                  step="0.01"
                   value={newGoal.target_value}
                   onChange={(e) => setNewGoal({ ...newGoal, target_value: e.target.value })}
                   placeholder="Enter target value"
@@ -399,7 +396,7 @@ const GoalsManagementPage = () => {
                 <Label htmlFor="assigned_to">Assign To</Label>
                 <Select 
                   value={newGoal.assigned_to} 
-                  onValueChange={(value) => setNewGoal({ ...newGoal, assigned_to: value })}
+                                     onChange={(e) => setNewGoal({ ...newGoal, assigned_to: e.target.value as string })}
                 >
                   <SelectTrigger>
                     <SelectValue placeholder="Select team member" />
@@ -413,7 +410,7 @@ const GoalsManagementPage = () => {
                         </SelectItem>
                       ))
                     ) : (
-                      <SelectItem value="none" disabled>No team members available</SelectItem>
+                      <SelectItem value="none">No team members available</SelectItem>
                     )}
                   </SelectContent>
                 </Select>
@@ -514,7 +511,7 @@ const GoalsManagementPage = () => {
                 className="w-64"
               />
             </div>
-                         <Select value={filterStatus} onValueChange={setFilterStatus}>
+                         <Select value={filterStatus} onChange={(e) => setFilterStatus(e.target.value as string)}>
                <SelectTrigger className="w-40">
                  <SelectValue placeholder="Status" />
                </SelectTrigger>
@@ -525,7 +522,7 @@ const GoalsManagementPage = () => {
                  <SelectItem value="overdue">Overdue</SelectItem>
                </SelectContent>
              </Select>
-                         <Select value={filterType} onValueChange={setFilterType}>
+                         <Select value={filterType} onChange={(e) => setFilterType(e.target.value as string)}>
                <SelectTrigger className="w-40">
                  <SelectValue placeholder="Type" />
                </SelectTrigger>
@@ -560,16 +557,16 @@ const GoalsManagementPage = () => {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <h3 className="text-lg font-semibold">{goal.title}</h3>
-                    <Badge className={getGoalTypeColor(goal.goal_type)}>
+                    <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGoalTypeColor(goal.goal_type)}`}>
                       {getGoalTypeLabel(goal.goal_type)}
-                    </Badge>
-                    <Badge variant={goal.is_completed ? "default" : "secondary"}>
+                    </div>
+                    <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${goal.is_completed ? "bg-green-100 text-green-800" : "bg-gray-100 text-gray-800"}`}>
                       {goal.is_completed ? 'COMPLETED' : goal.is_active ? 'ACTIVE' : 'INACTIVE'}
-                    </Badge>
+                    </div>
                     {goal.is_overdue && (
-                      <Badge className="bg-red-500 text-white">
+                      <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-500 text-white">
                         OVERDUE
-                      </Badge>
+                      </div>
                     )}
                   </div>
                   <p className="text-gray-600 mb-2">{goal.description}</p>
@@ -636,22 +633,21 @@ const GoalsManagementPage = () => {
                 <div className="mt-4 p-4 bg-gray-50 rounded-lg">
                   <div className="flex items-center gap-4">
                     <Label htmlFor={`progress-${goal.id}`} className="font-medium">Update Progress:</Label>
-                    <Input
-                      id={`progress-${goal.id}`}
-                      type="number"
-                      step="0.01"
-                      placeholder="Enter current value"
-                      className="w-32"
-                      onKeyPress={(e) => {
-                        if (e.key === 'Enter') {
-                          const value = parseFloat((e.target as HTMLInputElement).value);
-                          if (!isNaN(value)) {
-                            updateGoalProgress(goal.id, value);
-                            (e.target as HTMLInputElement).value = '';
-                          }
-                        }
-                      }}
-                    />
+                                         <Input
+                       id={`progress-${goal.id}`}
+                       type="number"
+                       placeholder="Enter current value"
+                       className="w-32"
+                       onKeyPress={(e) => {
+                         if (e.key === 'Enter') {
+                           const value = parseFloat((e.target as HTMLInputElement).value);
+                           if (!isNaN(value)) {
+                             updateGoalProgress(goal.id, value);
+                             (e.target as HTMLInputElement).value = '';
+                           }
+                         }
+                       }}
+                     />
                     <Button
                       size="sm"
                       onClick={() => {

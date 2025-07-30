@@ -6,6 +6,7 @@ import AddMemberModal from '@/components/AddMemberModal';
 import EditMemberModal from '@/components/EditMemberModal';
 import DeleteConfirmationModal from '@/components/DeleteConfirmationModal';
 import toast from 'react-hot-toast';
+import { FlexGrid } from '@/components/ui/FlexGrid';
 import {
   Box,
   Container,
@@ -358,8 +359,8 @@ export default function TeamManagement() {
         </Box>
 
         {/* Team Stats */}
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={6} sm={3}>
+        <FlexGrid container spacing={3} sx={{ mb: 4 }}>
+          <FlexGrid xs={6} sm={3}>
             <StatCard
               title="Total Team Members"
               value={totalMembers}
@@ -367,9 +368,9 @@ export default function TeamManagement() {
               icon={<GroupIcon />}
               color="primary"
             />
-          </Grid>
+          </FlexGrid>
           
-          <Grid item xs={6} sm={3}>
+          <FlexGrid xs={6} sm={3}>
             <StatCard
               title="Active Members"
               value={activeMembers}
@@ -377,9 +378,9 @@ export default function TeamManagement() {
               icon={<TrendingUpIcon />}
               color="success"
             />
-          </Grid>
+          </FlexGrid>
           
-          <Grid item xs={6} sm={3}>
+          <FlexGrid xs={6} sm={3}>
             <StatCard
               title="Total Sales"
               value={formatCurrency(totalSales)}
@@ -387,9 +388,9 @@ export default function TeamManagement() {
               icon={<MoneyIcon />}
               color="info"
             />
-          </Grid>
+          </FlexGrid>
           
-          <Grid item xs={6} sm={3}>
+          <FlexGrid xs={6} sm={3}>
             <StatCard
               title="Avg Performance"
               value={`${avgPerformance}%`}
@@ -397,8 +398,8 @@ export default function TeamManagement() {
               icon={<AssessmentIcon />}
               color="warning"
             />
-          </Grid>
-        </Grid>
+          </FlexGrid>
+        </FlexGrid>
 
         {/* Store Filter */}
         <Card elevation={2} sx={{ mb: 4 }}>
@@ -571,8 +572,8 @@ export default function TeamManagement() {
         </Card>
 
         {/* Performance Overview */}
-        <Grid container spacing={3} sx={{ mb: 4 }}>
-          <Grid item xs={12} md={6}>
+        <FlexGrid container spacing={3} sx={{ mb: 4 }}>
+          <FlexGrid xs={12} md={6}>
             <Card elevation={2} sx={{ height: '100%' }}>
               <CardContent sx={{ p: 3 }}>
                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
@@ -588,8 +589,8 @@ export default function TeamManagement() {
                     </Typography>
                   </Box>
                 ) : (
-                  <Grid container spacing={2}>
-                    <Grid item xs={4}>
+                  <FlexGrid container spacing={2}>
+                    <FlexGrid xs={4}>
                       <Box sx={{ textAlign: 'center' }}>
                         <Typography variant="h4" sx={{ color: 'info.main', fontWeight: 700 }}>
                           {activeMembers}
@@ -598,8 +599,8 @@ export default function TeamManagement() {
                           Active Members
                         </Typography>
                       </Box>
-                    </Grid>
-                    <Grid item xs={4}>
+                    </FlexGrid>
+                    <FlexGrid xs={4}>
                       <Box sx={{ textAlign: 'center' }}>
                         <Typography variant="h4" sx={{ color: 'success.main', fontWeight: 700 }}>
                           {avgPerformance}%
@@ -608,8 +609,8 @@ export default function TeamManagement() {
                           Team Performance
                         </Typography>
                       </Box>
-                    </Grid>
-                    <Grid item xs={4}>
+                    </FlexGrid>
+                    <FlexGrid xs={4}>
                       <Box sx={{ textAlign: 'center' }}>
                         <Typography variant="h4" sx={{ color: 'warning.main', fontWeight: 700 }}>
                           {formatCurrency(totalSales)}
@@ -618,14 +619,14 @@ export default function TeamManagement() {
                           Total Sales
                         </Typography>
                       </Box>
-                    </Grid>
-                  </Grid>
+                    </FlexGrid>
+                  </FlexGrid>
                 )}
               </CardContent>
             </Card>
-          </Grid>
+          </FlexGrid>
           
-          <Grid item xs={12} md={6}>
+          <FlexGrid xs={12} md={6}>
             <Card elevation={2} sx={{ height: '100%' }}>
               <CardContent sx={{ p: 3 }}>
                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
@@ -663,8 +664,8 @@ export default function TeamManagement() {
                 )}
               </CardContent>
             </Card>
-          </Grid>
-        </Grid>
+          </FlexGrid>
+        </FlexGrid>
 
         {/* Modals */}
         <AddMemberModal

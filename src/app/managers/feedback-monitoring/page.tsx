@@ -194,8 +194,8 @@ export default function FeedbackMonitoringPage() {
                     <div key={assignment.id} className="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
                       <div className="flex justify-between items-start mb-4">
                         <div>
-                          <h3 className="text-lg font-semibold">{assignment.customer_visit.customer_name}</h3>
-                          <p className="text-gray-600">{assignment.customer_visit.customer_phone}</p>
+                          <h3 className="text-lg font-semibold">{assignment.customer_visit_details?.customer_name || 'Unknown Customer'}</h3>
+                          <p className="text-gray-600">{assignment.customer_visit_details?.customer_phone || 'No phone'}</p>
                         </div>
                         <div className="text-right">
                           <span className={`inline-block px-2 py-1 rounded text-xs font-semibold ${
@@ -212,7 +212,7 @@ export default function FeedbackMonitoringPage() {
                         <div>
                           <label className="text-sm font-medium text-gray-600">Telecaller</label>
                           <div className="text-sm">
-                            {assignment.telecaller_details.first_name} {assignment.telecaller_details.last_name}
+                            {assignment.telecaller_details?.first_name || 'Unknown'} {assignment.telecaller_details?.last_name || ''}
                           </div>
                         </div>
                         <div>
@@ -303,7 +303,7 @@ export default function FeedbackMonitoringPage() {
                         <div>
                           <label className="text-sm font-medium text-gray-600">Telecaller</label>
                           <div className="text-sm">
-                            {assignment.telecaller_details.first_name} {assignment.telecaller_details.last_name}
+                            {assignment.telecaller_details?.first_name || 'Unknown'} {assignment.telecaller_details?.last_name || ''}
                           </div>
                         </div>
                         <div>
@@ -389,7 +389,7 @@ export default function FeedbackMonitoringPage() {
                             </td>
                             <td className="px-4 py-2 text-sm">
                               {assignment.telecaller_details ? 
-                                `${assignment.telecaller_details.first_name} ${assignment.telecaller_details.last_name}` : 
+                                `${assignment.telecaller_details?.first_name || 'Unknown'} ${assignment.telecaller_details?.last_name || ''}` : 
                                 'Not specified'
                               }
                             </td>

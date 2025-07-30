@@ -22,19 +22,20 @@ import {
 } from '@mui/material';
 import toast from 'react-hot-toast';
 
+import { FlexGrid } from '@/components/ui/FlexGrid';
 const DashboardSkeleton = () => (
     <Container maxWidth="xl" sx={{ py: 4 }}>
         <Box sx={{ mb: 4 }}>
             <Skeleton variant="text" width={400} height={50} />
             <Skeleton variant="text" width={300} height={20} />
         </Box>
-        <Grid container spacing={3} sx={{ mb: 4 }}>
+        <FlexGrid container spacing={3} sx={{ mb: 4 }}>
             {[...Array(4)].map((_, index) => (
-                <Grid item xs={12} sm={6} md={3} key={index}>
+                <FlexGrid xs={12} sm={6} md={3} key={index}>
                     <Skeleton variant="rectangular" height={100} sx={{ borderRadius: 2 }} />
-                </Grid>
+                </FlexGrid>
             ))}
-        </Grid>
+        </FlexGrid>
         <Skeleton variant="rectangular" height={300} sx={{ borderRadius: 2, mb: 4 }} />
         <Skeleton variant="rectangular" height={150} sx={{ borderRadius: 2 }} />
     </Container>
@@ -91,24 +92,24 @@ export default function PlatformAdminDashboard() {
       </Box>
 
       {/* Stats Grid */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} sm={6} md={3}>
+      <FlexGrid container spacing={3} sx={{ mb: 4 }}>
+        <FlexGrid xs={12} sm={6} md={3}>
           <Card sx={{ height: '100%' }}>
             <CardContent>
               <Typography variant="h6" component="h3" sx={{ fontWeight: 'medium', color: 'text.secondary' }}>Total CRMs Deployed</Typography>
               <Typography variant="h4" component="p" sx={{ fontWeight: 'bold', color: 'text.primary' }}>{loadingTenants ? '...' : totalTenants}</Typography>
             </CardContent>
           </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </FlexGrid>
+        <FlexGrid xs={12} sm={6} md={3}>
           <Card sx={{ height: '100%' }}>
             <CardContent>
               <Typography variant="h6" component="h3" sx={{ fontWeight: 'medium', color: 'text.secondary' }}>Active Subscriptions</Typography>
               <Typography variant="h4" component="p" sx={{ fontWeight: 'bold', color: 'text.primary' }}>{loadingTenants ? '...' : activeTenants}</Typography>
             </CardContent>
           </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </FlexGrid>
+        <FlexGrid xs={12} sm={6} md={3}>
           <Card sx={{ height: '100%' }}>
             <CardContent>
               <Typography variant="h6" component="h3" sx={{ fontWeight: 'medium', color: 'text.secondary' }}>System Uptime</Typography>
@@ -116,16 +117,16 @@ export default function PlatformAdminDashboard() {
               <Typography variant="body2" sx={{ color: 'text.success' }}>Last 30 days</Typography>
             </CardContent>
           </Card>
-        </Grid>
-        <Grid item xs={12} sm={6} md={3}>
+        </FlexGrid>
+        <FlexGrid xs={12} sm={6} md={3}>
           <Card sx={{ height: '100%' }}>
             <CardContent>
               <Typography variant="h6" component="h3" sx={{ fontWeight: 'medium', color: 'text.secondary' }}>Support Tickets</Typography>
               <Typography variant="h4" component="p" sx={{ fontWeight: 'bold', color: 'text.primary' }}>0</Typography>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </FlexGrid>
+      </FlexGrid>
 
       {/* Recent Tenants */}
       <Card sx={{ mb: 4 }}>
@@ -218,32 +219,32 @@ export default function PlatformAdminDashboard() {
         <CardContent>
           <Typography variant="h6" component="h3" sx={{ fontWeight: 'medium', color: 'text.primary' }}>Quick Actions</Typography>
           <Divider sx={{ my: 2 }} />
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={4}>
+          <FlexGrid container spacing={2}>
+            <FlexGrid xs={12} sm={4}>
               <Card sx={{ height: '100%', textAlign: 'center' }}>
                 <CardContent>
                   <Typography variant="h6" component="h4" sx={{ fontWeight: 'medium', color: 'text.primary' }}>Deploy New CRM</Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>Create a new CRM instance</Typography>
                 </CardContent>
               </Card>
-            </Grid>
-            <Grid item xs={12} sm={4}>
+            </FlexGrid>
+            <FlexGrid xs={12} sm={4}>
               <Card sx={{ height: '100%', textAlign: 'center' }}>
                 <CardContent>
                   <Typography variant="h6" component="h4" sx={{ fontWeight: 'medium', color: 'text.primary' }}>View Analytics</Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>Platform usage statistics</Typography>
                 </CardContent>
               </Card>
-            </Grid>
-            <Grid item xs={12} sm={4}>
+            </FlexGrid>
+            <FlexGrid xs={12} sm={4}>
               <Card sx={{ height: '100%', textAlign: 'center' }}>
                 <CardContent>
                   <Typography variant="h6" component="h4" sx={{ fontWeight: 'medium', color: 'text.primary' }}>Support</Typography>
                   <Typography variant="body2" sx={{ color: 'text.secondary' }}>Manage support tickets</Typography>
                 </CardContent>
               </Card>
-            </Grid>
-          </Grid>
+            </FlexGrid>
+          </FlexGrid>
         </CardContent>
       </Card>
     </Container>

@@ -37,6 +37,7 @@ import {
 } from 'lucide-react';
 import api from '@/lib/api';
 
+import { FlexGrid } from '@/components/ui/FlexGrid';
 interface WhatsAppCampaign {
   id: string;
   name: string;
@@ -253,9 +254,9 @@ export default function WhatsAppCampaignManager() {
                 }
               }}>
                 <CardContent sx={{ p: 3 }}>
-                  <Grid container spacing={3}>
+                  <FlexGrid container spacing={3}>
                     {/* Campaign Icon & Info */}
-                    <Grid item xs={12} md={8}>
+                    <FlexGrid xs={12} md={8}>
                       <Box sx={{ display: 'flex', alignItems: 'flex-start', gap: 2 }}>
                         <Typography variant="h4" sx={{ mt: 0.5 }}>💬</Typography>
                         <Box sx={{ flex: 1 }}>
@@ -280,56 +281,56 @@ export default function WhatsAppCampaignManager() {
                           </Typography>
                           
                           {/* Metrics Grid */}
-                          <Grid container spacing={2} sx={{ mb: 2 }}>
-                            <Grid item xs={6} sm={4} md={2}>
+                          <FlexGrid container spacing={2} sx={{ mb: 2 }}>
+                            <FlexGrid xs={6} sm={4} md={2}>
                               <Box>
                                 <Typography variant="caption" color="text.secondary">Target</Typography>
                                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
                                   {campaign.targetAudience.toLocaleString()}
                                 </Typography>
                               </Box>
-                            </Grid>
-                            <Grid item xs={6} sm={4} md={2}>
+                            </FlexGrid>
+                            <FlexGrid xs={6} sm={4} md={2}>
                               <Box>
                                 <Typography variant="caption" color="text.secondary">Sent</Typography>
                                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
                                   {campaign.sent.toLocaleString()}
                                 </Typography>
                               </Box>
-                            </Grid>
-                            <Grid item xs={6} sm={4} md={2}>
+                            </FlexGrid>
+                            <FlexGrid xs={6} sm={4} md={2}>
                               <Box>
                                 <Typography variant="caption" color="text.secondary">Delivered</Typography>
                                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
                                   {campaign.delivered.toLocaleString()}
                                 </Typography>
                               </Box>
-                            </Grid>
-                            <Grid item xs={6} sm={4} md={2}>
+                            </FlexGrid>
+                            <FlexGrid xs={6} sm={4} md={2}>
                               <Box>
                                 <Typography variant="caption" color="text.secondary">Read</Typography>
                                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
                                   {campaign.read.toLocaleString()}
                                 </Typography>
                               </Box>
-                            </Grid>
-                            <Grid item xs={6} sm={4} md={2}>
+                            </FlexGrid>
+                            <FlexGrid xs={6} sm={4} md={2}>
                               <Box>
                                 <Typography variant="caption" color="text.secondary">Replies</Typography>
                                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
                                   {campaign.replied}
                                 </Typography>
                               </Box>
-                            </Grid>
-                            <Grid item xs={6} sm={4} md={2}>
+                            </FlexGrid>
+                            <FlexGrid xs={6} sm={4} md={2}>
                               <Box>
                                 <Typography variant="caption" color="text.secondary">Revenue</Typography>
                                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
                                   ₹{(campaign.revenue / 1000).toFixed(0)}K
                                 </Typography>
                               </Box>
-                            </Grid>
-                          </Grid>
+                            </FlexGrid>
+                          </FlexGrid>
 
                           {/* Segments */}
                           <Stack direction="row" spacing={1} sx={{ mb: 2, flexWrap: 'wrap' }}>
@@ -351,10 +352,10 @@ export default function WhatsAppCampaignManager() {
                           </Typography>
                         </Box>
                       </Box>
-                    </Grid>
+                    </FlexGrid>
 
                     {/* Action Buttons */}
-                    <Grid item xs={12} md={4}>
+                    <FlexGrid xs={12} md={4}>
                       <Stack 
                         direction={{ xs: 'row', md: 'column' }} 
                         spacing={1} 
@@ -373,8 +374,8 @@ export default function WhatsAppCampaignManager() {
                     Send
                   </Button>
                       </Stack>
-                    </Grid>
-                  </Grid>
+                    </FlexGrid>
+                  </FlexGrid>
             </CardContent>
           </Card>
             </Fade>
@@ -389,9 +390,9 @@ export default function WhatsAppCampaignManager() {
             </Typography>
         </CardHeader>
         <CardContent>
-            <Grid container spacing={3}>
+            <FlexGrid container spacing={3}>
             {templates.map((template) => (
-                <Grid item xs={12} md={6} key={template.id}>
+                <FlexGrid xs={12} md={6} key={template.id}>
                   <Paper variant="outlined" sx={{ p: 3 }}>
                     <Box sx={{ 
                       display: 'flex', 
@@ -438,9 +439,9 @@ export default function WhatsAppCampaignManager() {
                   </Button>
                     </Stack>
                   </Paper>
-                </Grid>
+                </FlexGrid>
             ))}
-            </Grid>
+            </FlexGrid>
         </CardContent>
       </Card>
       </Stack>

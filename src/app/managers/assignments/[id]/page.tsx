@@ -66,7 +66,7 @@ export default function ManagerAssignmentDetailPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
   const params = useParams();
-  const assignmentId = params.id;
+  const assignmentId = params.id as string;
   
   const [assignment, setAssignment] = useState<Assignment | null>(null);
   const [loadingAssignment, setLoadingAssignment] = useState(true);

@@ -7,7 +7,7 @@ export interface SeparatorProps extends Omit<DividerProps, 'orientation'> {
   orientation?: 'horizontal' | 'vertical'
 }
 
-const Separator = React.forwardRef<HTMLDivElement, SeparatorProps>(
+const Separator = React.forwardRef<HTMLHRElement, SeparatorProps>(
   ({ className, orientation = 'horizontal', ...props }, ref) => (
     <Divider
       ref={ref}

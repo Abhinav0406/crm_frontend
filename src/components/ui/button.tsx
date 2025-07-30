@@ -3,35 +3,35 @@ import { Button as MuiButton, ButtonProps as MuiButtonProps } from "@mui/materia
 import { styled } from "@mui/material/styles"
 
 // Styled button variants
-const StyledButton = styled(MuiButton)<{ variant?: string; size?: string }>(({ theme, variant, size }) => ({
-  ...(variant === 'destructive' && {
+const StyledButton = styled(MuiButton)<{ buttonVariant?: string; buttonSize?: string }>(({ theme, buttonVariant, buttonSize }) => ({
+  ...(buttonVariant === 'destructive' && {
     backgroundColor: theme.palette.error.main,
     color: theme.palette.error.contrastText,
     '&:hover': {
       backgroundColor: theme.palette.error.dark,
     },
   }),
-  ...(variant === 'outline' && {
+  ...(buttonVariant === 'outline' && {
     border: `1px solid ${theme.palette.divider}`,
     backgroundColor: 'transparent',
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
     },
   }),
-  ...(variant === 'secondary' && {
+  ...(buttonVariant === 'secondary' && {
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.secondary.contrastText,
     '&:hover': {
       backgroundColor: theme.palette.secondary.dark,
     },
   }),
-  ...(variant === 'ghost' && {
+  ...(buttonVariant === 'ghost' && {
     backgroundColor: 'transparent',
     '&:hover': {
       backgroundColor: theme.palette.action.hover,
     },
   }),
-  ...(variant === 'link' && {
+  ...(buttonVariant === 'link' && {
     backgroundColor: 'transparent',
     color: theme.palette.primary.main,
     textDecoration: 'underline',
@@ -40,17 +40,17 @@ const StyledButton = styled(MuiButton)<{ variant?: string; size?: string }>(({ t
       textDecoration: 'underline',
     },
   }),
-  ...(size === 'sm' && {
+  ...(buttonSize === 'sm' && {
     height: '36px',
     padding: '0 12px',
     fontSize: '0.875rem',
   }),
-  ...(size === 'lg' && {
+  ...(buttonSize === 'lg' && {
     height: '44px',
     padding: '0 32px',
     fontSize: '1rem',
   }),
-  ...(size === 'icon' && {
+  ...(buttonSize === 'icon' && {
     minWidth: '40px',
     width: '40px',
     height: '40px',
@@ -73,6 +73,8 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     
     return (
       <StyledButton
+        buttonVariant={variant}
+        buttonSize={size}
         variant={muiVariant}
         size={size === 'default' ? 'medium' : size === 'sm' ? 'small' : 'large'}
         ref={ref}

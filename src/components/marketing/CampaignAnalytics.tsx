@@ -104,7 +104,7 @@ export default function CampaignAnalytics({ campaignId }: { campaignId: string }
           <p className="text-gray-600">{analytics.name}</p>
         </div>
         <div className="flex space-x-2">
-          <Select value={timeRange} onValueChange={setTimeRange}>
+          <Select value={timeRange} onChange={(e) => setTimeRange(e.target.value as string)}>
             <SelectTrigger className="w-32">
               <SelectValue />
             </SelectTrigger>
@@ -242,7 +242,7 @@ export default function CampaignAnalytics({ campaignId }: { campaignId: string }
                   <p className="font-medium">{location.location}</p>
                   <p className="text-sm text-gray-500">{location.count} conversions</p>
                 </div>
-                <Badge variant="outline">{location.percentage}%</Badge>
+                <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700">{location.percentage}%</div>
               </div>
             ))}
           </div>

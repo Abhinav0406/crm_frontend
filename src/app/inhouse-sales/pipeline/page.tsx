@@ -32,6 +32,7 @@ import { styled } from '@mui/material/styles';
 import api from '@/lib/api';
 import Link from 'next/link';
 
+import { FlexGrid } from '@/components/ui/FlexGrid';
 const StyledCard = styled(Card)(({ theme }) => ({
   borderRadius: theme.spacing(2),
   boxShadow: theme.shadows[2],
@@ -212,17 +213,17 @@ export default function InhouseSalesPipelinePage() {
             Manage your sales pipeline and automate customer interactions
           </Typography>
         </Box>
-        <Grid container spacing={3}>
+        <FlexGrid container spacing={3}>
           {[...Array(4)].map((_, i) => (
-            <Grid item xs={12} md={3} key={i}>
+            <FlexGrid xs={12} md={3} key={i}>
               <Card sx={{ p: 3 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 100 }}>
                   <CircularProgress />
                 </Box>
               </Card>
-            </Grid>
+            </FlexGrid>
           ))}
-        </Grid>
+        </FlexGrid>
       </Container>
     );
   }
@@ -257,8 +258,8 @@ export default function InhouseSalesPipelinePage() {
       </Box>
 
       {/* Pipeline Stats */}
-      <Grid container spacing={3} sx={{ mb: 4 }}>
-        <Grid item xs={12} md={3}>
+      <FlexGrid container spacing={3} sx={{ mb: 4 }}>
+        <FlexGrid xs={12} md={3}>
           <StyledCard>
             <CardHeader 
               title={
@@ -281,9 +282,9 @@ export default function InhouseSalesPipelinePage() {
               </Typography>
           </CardContent>
           </StyledCard>
-        </Grid>
+        </FlexGrid>
         
-        <Grid item xs={12} md={3}>
+        <FlexGrid xs={12} md={3}>
           <StyledCard>
             <CardHeader 
               title={
@@ -303,9 +304,9 @@ export default function InhouseSalesPipelinePage() {
               </Typography>
           </CardContent>
           </StyledCard>
-        </Grid>
+        </FlexGrid>
         
-        <Grid item xs={12} md={3}>
+        <FlexGrid xs={12} md={3}>
           <StyledCard>
             <CardHeader 
               title={
@@ -326,9 +327,9 @@ export default function InhouseSalesPipelinePage() {
               </Typography>
           </CardContent>
           </StyledCard>
-        </Grid>
+        </FlexGrid>
         
-        <Grid item xs={12} md={3}>
+        <FlexGrid xs={12} md={3}>
           <StyledCard>
             <CardHeader 
               title={
@@ -351,16 +352,16 @@ export default function InhouseSalesPipelinePage() {
               </Typography>
           </CardContent>
           </StyledCard>
-        </Grid>
-      </Grid>
+        </FlexGrid>
+      </FlexGrid>
 
       {/* Pipeline Stages */}
       <StyledCard sx={{ mb: 4 }}>
         <CardHeader title={<Typography variant="h6" sx={{ fontWeight: 600 }}>Pipeline Stages</Typography>} />
         <CardContent>
-          <Grid container spacing={2}>
+          <FlexGrid container spacing={2}>
             {pipelineData?.stage_summary && Object.entries(pipelineData.stage_summary).map(([stage, data]) => (
-              <Grid item xs={12} sm={6} lg={3} key={stage}>
+              <FlexGrid xs={12} sm={6} lg={3} key={stage}>
                 <StageCard>
                   <Stack direction="row" justifyContent="space-between" alignItems="center" sx={{ mb: 1 }}>
                     <Typography variant="body2" sx={{ fontWeight: 500 }}>
@@ -380,9 +381,9 @@ export default function InhouseSalesPipelinePage() {
                   {data.percentage.toFixed(1)}% of total
                   </Typography>
                 </StageCard>
-              </Grid>
+              </FlexGrid>
             ))}
-          </Grid>
+          </FlexGrid>
         </CardContent>
       </StyledCard>
 

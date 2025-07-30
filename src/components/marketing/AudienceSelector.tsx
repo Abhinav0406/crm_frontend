@@ -132,10 +132,10 @@ export default function AudienceSelector({ selectedSegments, onSelectionChange }
           <p className="text-gray-600">Choose segments for your campaign</p>
         </div>
         <div className="flex items-center space-x-2">
-          <Badge variant="outline">
+          <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700">
             <Users className="w-4 h-4 mr-1" />
             {totalAudience.toLocaleString()} customers selected
-          </Badge>
+          </div>
         </div>
       </div>
 
@@ -177,16 +177,15 @@ export default function AudienceSelector({ selectedSegments, onSelectionChange }
               <div className="flex items-start space-x-4">
                 <Checkbox
                   checked={selectedSegments.includes(segment.id)}
-                  onCheckedChange={() => handleSegmentToggle(segment.id)}
+                  onChange={() => handleSegmentToggle(segment.id)}
                   className="mt-1"
                 />
                 <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
                     <div className="flex items-center space-x-3">
-                      <h3 className="font-medium">{segment.name}</h3>
-                      <Badge variant="outline" className="text-xs">
+                      <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700">
                         {segment.category}
-                      </Badge>
+                      </div>
                     </div>
                     <div className="text-right">
                       <p className="font-medium">{segment.count.toLocaleString()} customers</p>
@@ -196,9 +195,9 @@ export default function AudienceSelector({ selectedSegments, onSelectionChange }
                   <p className="text-sm text-gray-600 mb-3">{segment.description}</p>
                   <div className="flex flex-wrap gap-1">
                     {segment.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary" className="text-xs">
+                      <div key={tag} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
                         {tag}
-                      </Badge>
+                      </div>
                     ))}
                   </div>
                 </div>

@@ -2,22 +2,22 @@ import * as React from "react"
 import { Chip, ChipProps } from "@mui/material"
 import { styled } from "@mui/material/styles"
 
-const StyledChip = styled(Chip)<{ variant?: string }>(({ theme, variant }) => ({
-  ...(variant === 'destructive' && {
+const StyledChip = styled(Chip)<{ badgeVariant?: string }>(({ theme, badgeVariant }) => ({
+  ...(badgeVariant === 'destructive' && {
     backgroundColor: theme.palette.error.main,
     color: theme.palette.error.contrastText,
     '&:hover': {
       backgroundColor: theme.palette.error.dark,
     },
   }),
-  ...(variant === 'secondary' && {
+  ...(badgeVariant === 'secondary' && {
     backgroundColor: theme.palette.secondary.main,
     color: theme.palette.secondary.contrastText,
     '&:hover': {
       backgroundColor: theme.palette.secondary.dark,
     },
   }),
-  ...(variant === 'outline' && {
+  ...(badgeVariant === 'outline' && {
     backgroundColor: 'transparent',
     border: `1px solid ${theme.palette.divider}`,
     color: theme.palette.text.primary,
@@ -34,6 +34,7 @@ export interface BadgeProps extends Omit<ChipProps, 'variant'> {
 function Badge({ className, variant = 'default', ...props }: BadgeProps) {
   return (
     <StyledChip
+      badgeVariant={variant}
       variant={variant === 'outline' ? 'outlined' : 'filled'}
       size="small"
       sx={{

@@ -197,7 +197,7 @@ export default function CampaignBuilder() {
                 </div>
                 <div>
                   <Label htmlFor="type">Campaign Type</Label>
-                  <Select value={campaign.type} onValueChange={(value: any) => setCampaign(prev => ({ ...prev, type: value }))}>
+                  <Select value={campaign.type} onChange={(value: any) => setCampaign(prev => ({ ...prev, type: value }))}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -239,7 +239,7 @@ export default function CampaignBuilder() {
                       <div className="flex items-center space-x-3">
                         <Checkbox
                           checked={campaign.selectedSegments.includes(segment.id)}
-                          onCheckedChange={() => handleSegmentToggle(segment.id)}
+                          onChange={() => handleSegmentToggle(segment.id)}
                         />
                         <div className="flex-1">
                           <h3 className="font-medium">{segment.name}</h3>
@@ -315,7 +315,7 @@ export default function CampaignBuilder() {
               <CardContent className="space-y-4">
                 <div>
                   <Label>Send Schedule</Label>
-                  <Select value={campaign.schedule.type} onValueChange={(value: any) => setCampaign(prev => ({ 
+                  <Select value={campaign.schedule.type} onChange={(value: any) => setCampaign(prev => ({ 
                     ...prev, 
                     schedule: { ...prev.schedule, type: value }
                   }))}>
@@ -363,9 +363,9 @@ export default function CampaignBuilder() {
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         checked={campaign.settings.trackOpens}
-                        onCheckedChange={(checked) => setCampaign(prev => ({ 
+                        onChange={(e) => setCampaign(prev => ({ 
                           ...prev, 
-                          settings: { ...prev.settings, trackOpens: checked as boolean }
+                          settings: { ...prev.settings, trackOpens: e.target.checked }
                         }))}
                       />
                       <Label>Track Opens</Label>
@@ -373,9 +373,9 @@ export default function CampaignBuilder() {
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         checked={campaign.settings.trackClicks}
-                        onCheckedChange={(checked) => setCampaign(prev => ({ 
+                        onChange={(e) => setCampaign(prev => ({ 
                           ...prev, 
-                          settings: { ...prev.settings, trackClicks: checked as boolean }
+                          settings: { ...prev.settings, trackClicks: e.target.checked }
                         }))}
                       />
                       <Label>Track Clicks</Label>
@@ -383,9 +383,9 @@ export default function CampaignBuilder() {
                     <div className="flex items-center space-x-2">
                       <Checkbox
                         checked={campaign.settings.allowUnsubscribe}
-                        onCheckedChange={(checked) => setCampaign(prev => ({ 
+                        onChange={(e) => setCampaign(prev => ({ 
                           ...prev, 
-                          settings: { ...prev.settings, allowUnsubscribe: checked as boolean }
+                          settings: { ...prev.settings, allowUnsubscribe: e.target.checked }
                         }))}
                       />
                       <Label>Allow Unsubscribe</Label>
@@ -420,7 +420,7 @@ export default function CampaignBuilder() {
               </div>
               <div>
                 <Label className="text-sm text-gray-500">Type</Label>
-                <Badge variant="outline" className="capitalize">{campaign.type}</Badge>
+                <div className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700 capitalize">{campaign.type}</div>
               </div>
               <div>
                 <Label className="text-sm text-gray-500">Target Audience</Label>

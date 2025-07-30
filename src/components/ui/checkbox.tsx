@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { Checkbox, CheckboxProps } from "@mui/material"
+import { Checkbox, CheckboxProps as MuiCheckboxProps } from "@mui/material"
 import { FormControlLabel } from "@mui/material"
 
-export interface CheckboxProps extends Omit<CheckboxProps, 'color'> {
+export interface CheckboxProps extends Omit<MuiCheckboxProps, 'color'> {
   label?: string
 }
 

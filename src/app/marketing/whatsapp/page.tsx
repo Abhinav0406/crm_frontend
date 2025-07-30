@@ -350,244 +350,233 @@ export default function WhatsAppCampaignManager() {
       </div>
 
       {/* Main Content Tabs */}
-      <TabsList value={activeTab} onValueChange={setActiveTab} className="space-y-4">
-        <TabsList>
-          <TabsTrigger value="campaigns">Campaigns</TabsTrigger>
-          <TabsTrigger value="templates">Templates</TabsTrigger>
-          <TabsTrigger value="contacts">Contact Lists</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        </TabsList>
+      <div className="space-y-4">
+        <div className="flex space-x-4 border-b">
+          <button
+            onClick={() => setActiveTab("campaigns")}
+            className={`px-4 py-2 font-medium ${
+              activeTab === "campaigns"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Campaigns
+          </button>
+          <button
+            onClick={() => setActiveTab("templates")}
+            className={`px-4 py-2 font-medium ${
+              activeTab === "templates"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Templates
+          </button>
+          <button
+            onClick={() => setActiveTab("contacts")}
+            className={`px-4 py-2 font-medium ${
+              activeTab === "contacts"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Contact Lists
+          </button>
+          <button
+            onClick={() => setActiveTab("analytics")}
+            className={`px-4 py-2 font-medium ${
+              activeTab === "analytics"
+                ? "border-b-2 border-blue-500 text-blue-600"
+                : "text-gray-500 hover:text-gray-700"
+            }`}
+          >
+            Analytics
+          </button>
+        </div>
 
-        <TabsContent value="campaigns" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>WhatsApp Campaigns</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {(campaigns || []).map((campaign) => (
-                  <div key={campaign.id} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-3">
-                        <MessageSquare className="h-5 w-5 text-green-600" />
-                        <div>
-                          <h3 className="font-medium">{campaign.name}</h3>
-                          <p className="text-sm text-gray-500">
-                            Created {new Date(campaign.createdAt).toLocaleDateString()}
-                            {campaign.scheduledAt && (
-                              <span> • Scheduled for {new Date(campaign.scheduledAt).toLocaleDateString()}</span>
-                            )}
-                          </p>
-                        </div>
-                      </div>
-                      <Badge className={getStatusColor(campaign.status)}>
-                        {campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)}
-                      </Badge>
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-sm mb-4">
-                      <div>
-                        <p className="text-gray-500">Target</p>
-                        <p className="font-medium">{campaign.targetAudience?.toLocaleString() || '0'}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Sent</p>
-                        <p className="font-medium">{campaign.sent?.toLocaleString() || '0'}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Delivered</p>
-                        <p className="font-medium">{campaign.delivered?.toLocaleString() || '0'}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Read</p>
-                        <p className="font-medium">{campaign.read?.toLocaleString() || '0'}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Replies</p>
-                        <p className="font-medium">{campaign.replied}</p>
-                      </div>
-                      <div>
-                        <p className="text-gray-500">Revenue</p>
-                        <p className="font-medium">₹{(campaign.revenue / 1000).toFixed(0)}K</p>
-                      </div>
-                    </div>
-
-                    <div className="mb-4">
-                      <div className="flex items-center justify-between text-sm mb-2">
-                        <span>Progress</span>
-                        <span>{campaign.targetAudience > 0 ? Math.round((campaign.sent / campaign.targetAudience) * 100) : 0}%</span>
-                      </div>
-                      <Progress value={campaign.targetAudience > 0 ? (campaign.sent / campaign.targetAudience) * 100 : 0} className="w-full" />
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                      <div className="flex flex-wrap gap-1">
-                        {(campaign.segments || []).map((segment) => (
-                          <Badge key={segment} variant="outline" className="text-xs">
-                            {segment}
-                          </Badge>
-                        ))}
-                      </div>
-                      <div className="flex space-x-2">
-                        <Button variant="outline" size="sm">
-                          <Eye className="w-4 h-4 mr-1" />
-                          View
-                        </Button>
-                        <Button variant="outline" size="sm">
-                          <BarChart3 className="w-4 h-4 mr-1" />
-                          Analytics
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="templates" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Message Templates</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {(templates || []).map((template) => (
-                  <div key={template.id} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <h3 className="font-medium">{template.name}</h3>
-                        <p className="text-sm text-gray-500">{template.category} • {template.language}</p>
-                      </div>
-                      <Badge className={getTemplateStatusColor(template.status)}>
-                        {template.status.charAt(0).toUpperCase() + template.status.slice(1)}
-                      </Badge>
-                    </div>
-                    <p className="text-sm text-gray-600 mb-3">{template.content}</p>
-                    <div className="flex justify-end space-x-2">
-                      <Button variant="outline" size="sm">
-                        Edit
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        Use Template
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="contacts" className="space-y-4">
-          <Card>
-            <CardHeader>
-              <CardTitle>Contact Lists</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-4">
-                {(contactLists || []).map((list) => (
-                  <div key={list.id} className="border rounded-lg p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <div>
-                        <h3 className="font-medium">{list.name}</h3>
-                        <p className="text-sm text-gray-500">{list.source}</p>
-                      </div>
-                      <div className="text-right">
-                        <p className="font-medium">{list.count?.toLocaleString() || '0'} contacts</p>
-                        <p className="text-sm text-gray-500">
-                          Updated {new Date(list.lastUpdated).toLocaleDateString()}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="flex justify-end space-x-2">
-                      <Button variant="outline" size="sm">
-                        <Download className="w-4 h-4 mr-1" />
-                        Export
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        Edit
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        Use List
-                      </Button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="analytics" className="space-y-4">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        {activeTab === "campaigns" && (
+          <div className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Performance Overview</CardTitle>
+                <CardTitle>WhatsApp Campaigns</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Delivery Rate</span>
-                    <span className="font-medium">{deliveryRate.toFixed(1)}%</span>
-                  </div>
-                  <Progress value={deliveryRate} className="w-full" />
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Read Rate</span>
-                    <span className="font-medium">{readRate.toFixed(1)}%</span>
-                  </div>
-                  <Progress value={readRate} className="w-full" />
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Reply Rate</span>
-                    <span className="font-medium">{replyRate.toFixed(1)}%</span>
-                  </div>
-                  <Progress value={replyRate} className="w-full" />
-                  
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm">Conversion Rate</span>
-                    <span className="font-medium">{conversionRate.toFixed(1)}%</span>
-                  </div>
-                  <Progress value={conversionRate} className="w-full" />
+                  {(campaigns || []).map((campaign) => (
+                    <div key={campaign.id} className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-4">
+                        <div className="flex items-center space-x-3">
+                          <MessageSquare className="h-5 w-5 text-green-600" />
+                          <div>
+                            <h3 className="font-medium">{campaign.name}</h3>
+                            <p className="text-sm text-gray-500">
+                              Created {new Date(campaign.createdAt).toLocaleDateString()}
+                              {campaign.scheduledAt && (
+                                <span> • Scheduled for {new Date(campaign.scheduledAt).toLocaleDateString()}</span>
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(campaign.status)}`}>
+                          {campaign.status.charAt(0).toUpperCase() + campaign.status.slice(1)}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 text-sm mb-4">
+                        <div>
+                          <p className="text-gray-500">Target</p>
+                          <p className="font-medium">{campaign.targetAudience?.toLocaleString() || '0'}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500">Sent</p>
+                          <p className="font-medium">{campaign.sent?.toLocaleString() || '0'}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500">Delivered</p>
+                          <p className="font-medium">{campaign.delivered?.toLocaleString() || '0'}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500">Read</p>
+                          <p className="font-medium">{campaign.read?.toLocaleString() || '0'}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500">Replies</p>
+                          <p className="font-medium">{campaign.replied}</p>
+                        </div>
+                        <div>
+                          <p className="text-gray-500">Revenue</p>
+                          <p className="font-medium">₹{(campaign.revenue / 1000).toFixed(0)}K</p>
+                        </div>
+                      </div>
+
+                      <div className="mb-4">
+                        <div className="flex items-center justify-between text-sm mb-2">
+                          <span>Progress</span>
+                          <span>{campaign.targetAudience > 0 ? Math.round((campaign.sent / campaign.targetAudience) * 100) : 0}%</span>
+                        </div>
+                        <Progress value={campaign.targetAudience > 0 ? (campaign.sent / campaign.targetAudience) * 100 : 0} className="w-full" />
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div className="flex flex-wrap gap-1">
+                          {(campaign.segments || []).map((segment) => (
+                            <div key={segment} className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border border-gray-300 text-gray-700">
+                              {segment}
+                            </div>
+                          ))}
+                        </div>
+                        <div className="flex space-x-2">
+                          <Button variant="outline" size="sm">
+                            <Eye className="w-4 h-4 mr-1" />
+                            View
+                          </Button>
+                          <Button variant="outline" size="sm">
+                            <BarChart3 className="w-4 h-4 mr-1" />
+                            Analytics
+                          </Button>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </CardContent>
             </Card>
+          </div>
+        )}
 
+        {activeTab === "templates" && (
+          <div className="space-y-4">
             <Card>
               <CardHeader>
-                <CardTitle>Recent Activity</CardTitle>
+                <CardTitle>Message Templates</CardTitle>
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  <div className="flex items-center space-x-3">
-                    <CheckCircle className="h-4 w-4 text-green-600" />
-                    <div>
-                      <p className="text-sm font-medium">Campaign completed</p>
-                      <p className="text-xs text-gray-500">Diwali Collection - 2 hours ago</p>
+                  {(templates || []).map((template) => (
+                    <div key={template.id} className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <div>
+                          <h3 className="font-medium">{template.name}</h3>
+                          <p className="text-sm text-gray-500">{template.category} • {template.language}</p>
+                        </div>
+                        <div className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getTemplateStatusColor(template.status)}`}>
+                          {template.status.charAt(0).toUpperCase() + template.status.slice(1)}
+                        </div>
+                      </div>
+                      <p className="text-sm text-gray-700 mb-3">{template.content}</p>
+                      <div className="flex justify-end space-x-2">
+                        <Button variant="outline" size="sm">Edit</Button>
+                        <Button variant="outline" size="sm">Use Template</Button>
+                      </div>
                     </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {activeTab === "contacts" && (
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>Contact Lists</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {(contactLists || []).map((list) => (
+                    <div key={list.id} className="border rounded-lg p-4">
+                      <div className="flex items-center justify-between mb-3">
+                        <div>
+                          <h3 className="font-medium">{list.name}</h3>
+                          <p className="text-sm text-gray-500">{list.source} • {list.count.toLocaleString()} contacts</p>
+                        </div>
+                        <div className="text-sm text-gray-500">
+                          Updated {new Date(list.lastUpdated).toLocaleDateString()}
+                        </div>
+                      </div>
+                      <div className="flex justify-end space-x-2">
+                        <Button variant="outline" size="sm">View Contacts</Button>
+                        <Button variant="outline" size="sm">Export</Button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        )}
+
+        {activeTab === "analytics" && (
+          <div className="space-y-4">
+            <Card>
+              <CardHeader>
+                <CardTitle>WhatsApp Analytics</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                  <div className="text-center p-4 bg-blue-50 rounded-lg">
+                    <div className="text-2xl font-bold text-blue-600">{(totalMetrics?.sent || 0).toLocaleString()}</div>
+                    <div className="text-sm text-gray-600">Total Sent</div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <Clock className="h-4 w-4 text-blue-600" />
-                    <div>
-                      <p className="text-sm font-medium">Campaign scheduled</p>
-                      <p className="text-xs text-gray-500">Wedding Season Promo - 1 day ago</p>
-                    </div>
+                  <div className="text-center p-4 bg-green-50 rounded-lg">
+                    <div className="text-2xl font-bold text-green-600">{(totalMetrics?.delivered || 0).toLocaleString()}</div>
+                    <div className="text-sm text-gray-600">Delivered</div>
                   </div>
-                  <div className="flex items-center space-x-3">
-                    <AlertCircle className="h-4 w-4 text-yellow-600" />
-                    <div>
-                      <p className="text-sm font-medium">Template pending approval</p>
-                      <p className="text-xs text-gray-500">Wedding Collection - 3 days ago</p>
-                    </div>
+                  <div className="text-center p-4 bg-purple-50 rounded-lg">
+                    <div className="text-2xl font-bold text-purple-600">{(totalMetrics?.read || 0).toLocaleString()}</div>
+                    <div className="text-sm text-gray-600">Read</div>
+                  </div>
+                  <div className="text-center p-4 bg-orange-50 rounded-lg">
+                    <div className="text-2xl font-bold text-orange-600">{(totalMetrics?.replied || 0).toLocaleString()}</div>
+                    <div className="text-sm text-gray-600">Replies</div>
                   </div>
                 </div>
               </CardContent>
             </Card>
           </div>
-        </TabsContent>
-      </TabsList>
+        )}
+      </div>
     </div>
   );
 } 

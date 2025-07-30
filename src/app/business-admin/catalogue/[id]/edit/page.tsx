@@ -39,7 +39,7 @@ interface Category {
 export default function EditProduct() {
   const router = useRouter();
   const params = useParams();
-  const productId = params.id;
+  const productId = params.id as string;
   
   const [product, setProduct] = useState<Product | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
